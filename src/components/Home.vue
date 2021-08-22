@@ -129,7 +129,7 @@
           <h2 class="text-h6 primary--text">
             AASTU Free Tutor 
           </h2>
-          Travel to the best outdoor experience on planet Earth. A vacation you will never forget!                    
+          Get free Tutorial. A vacation you will never forget!                    
         </v-card-text>
 
         <v-fade-transition>
