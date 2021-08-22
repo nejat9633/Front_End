@@ -1,5 +1,5 @@
 <template>
-
+<!-- try to make the navigation drawer from the app.vue disappear!! -->
  <v-app id="inspire">
     <v-navigation-drawer 
     v-model="drawer"
@@ -18,6 +18,28 @@
       </v-list-item>
 
       <v-divider></v-divider>
+
+ <v-list>
+          <v-list-item class="px-2">
+            <v-list-item-avatar color="primary">
+           <!-- <span class="white--text text-h5">{{gh}}</span>-->
+           <v-icon dark>
+        mdi-account
+      </v-icon>
+            </v-list-item-avatar>
+
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title class="text-h6">
+                someone 
+              </v-list-item-title>
+              <v-list-item-subtitle>someone@gmail.com</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item> </v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+
 
       <v-list
         dense
@@ -38,11 +60,43 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+<!---->
+<v-list-group
+          :value="true"
+          no-action
+          sub-group
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title ><strong>My Menu</strong></v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item
+            v-for="([title, icon], i) in admins"
+            :key="i"
+            link
+          >
+            <v-list-item-title v-text="title"></v-list-item-title>
+
+            <v-list-item-icon>
+              <v-icon v-text="icon"></v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-group>
+<!--   -->
+      <template v-slot:append>
+        <div class="pa-2" >
+          <v-btn block dark>
+            Logout
+          </v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
   
     <v-app-bar
       app
-     dark
+      dark
       height="80"
       scroll-target="#scrolling-techniques-2"
     >
@@ -52,7 +106,7 @@
               alt="Vuetify Logo"
               class="shrink mr-2"
               contain
-              :src="require('./assets/aastu_logo1.png')"
+              :src="require('../../assets/aastu_logo1.png')"
               transition="scale-transition"
               width="100"
               max-height="60"
@@ -66,16 +120,7 @@
     </v-main>
 
  <v-spacer></v-spacer>
-    <v-footer dark padless color="black">
-      <v-col class="text-center" cols="12">
-        {{ new Date().getFullYear() }} —
-        <v-btn target="_blank" text v-for="link in links" :key="link.text" router :to="link.to" >
-        <strong>About Us</strong>
-        </v-btn>
-      </v-col>
-    </v-footer>
-   
-
+  
   </v-app>
   
 </template>
@@ -95,11 +140,18 @@ export default {
           { title: 'Home', icon: 'mdi-home', to:'/' },
           { title: 'Clubs', icon: 'mdi-account-group-outline', to:'' },
           { title: 'Forum', icon: 'mdi-forum-outline' , to:'' },
-          { title: 'Login', icon: 'mdi-login-variant', to:'/login' },
+          //{ title: 'My Menu', icon: 'mdi-menu', to:'/student' },
         ],
+
         links: [
           {text: 'About Us', to: '/about'}
-        ]
+        ],
+
+         admins: [
+            ['My Materials','mdi-note multiple'],
+        ['My Questions', 'mdi-frequently-asked-questions'],
+        ['My Clubs', 'mdi-account-group'] 
+      ]
   }),
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
     <v-container>
         <v-row>
-                <div class="pa-3 blue--text">
-                    <h2> Latest Events</h2>
+                <div  class="pa-3  text-h5 dark" >
+                    <span> Latest Events</span>
                 </div>
         </v-row>
         <v-row>
@@ -14,7 +14,7 @@
         class="mx-auto"
         max-width="344"
        min-height="450" 
-       max-height="450"
+       max-height="650"
        >
         <v-img src="../assets/notice1.jpg" height="350" contain></v-img>
 
@@ -31,7 +31,28 @@
             absolute
             color="#036358"
           >
-            <v-btn>See more info</v-btn>
+             <div>
+            <v-btn v-if="!alert"
+        dark
+        @click="alert = true">See more info</v-btn>
+  
+          <v-alert
+      v-model="alert"
+      color="#212121"
+      dark
+      dismissible
+      border="top"
+      icon="mdi-dots-horizontal"
+      transition="scale-transition"
+    >
+      Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. 
+      In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. 
+      Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+      Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. 
+      Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo. In hac habitasse platea dictumst. Praesent turpis.
+    </v-alert>
+          </div>
+          
           </v-overlay>
         </v-fade-transition>
       </v-card>
@@ -55,8 +76,7 @@
             AASTU Free Tutor 
           </h2>
           Travel to the best outdoor experience on planet Earth. A vacation you will never forget! 
-          Lorem ipsum dolor sit amet consectetur, 
-                   
+                            
         </v-card-text>
 
         <v-fade-transition>
@@ -65,7 +85,28 @@
             absolute
             color="#036358"
           >
-            <v-btn>See more info</v-btn>
+        <div>
+            <v-btn v-if="!alert"
+        dark
+        @click="alert = true">See more info</v-btn>
+  
+          <v-alert
+      v-model="alert"
+      color="#212121"
+      dark
+      dismissible
+      border="top"
+      icon="mdi-dots-horizontal"
+      transition="scale-transition"
+    >
+      Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. 
+      In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. 
+      Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+      Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. 
+      Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo. In hac habitasse platea dictumst. Praesent turpis.
+    </v-alert>
+          </div>
+    
           </v-overlay>
         </v-fade-transition>
       </v-card>
@@ -97,14 +138,39 @@
             absolute
             color="#036358"
           >
-            <v-btn>See more info</v-btn>
+             <div>
+            <v-btn v-if="!alert"
+        dark
+        @click="alert = true">See more info</v-btn>
+  
+          <v-alert
+      v-model="alert"
+      color="#212121"
+      dark
+      dismissible
+      border="top"
+      icon="mdi-dots-horizontal"
+      transition="scale-transition"
+    >
+      Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. 
+      In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. 
+      Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+      Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. 
+      Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo. In hac habitasse platea dictumst. Praesent turpis.
+    </v-alert>
+          </div>
+
           </v-overlay>
         </v-fade-transition>
       </v-card>
     </template>
   </v-hover>
   </v-col>
-            
+
+         <!--   
+           DON'T DELETE 
+           we may need this !!
+
             <v-col>
                 <v-row class="mt-16">
                 </v-row>
@@ -116,7 +182,8 @@
                 </v-btn>
                 </v-row>
             </v-col>
-             
+             -->
+
         </v-row>
     </v-container>
 </template>
@@ -124,6 +191,7 @@
 export default {
 data: () => ({
       overlay: false,
+      alert: false
     }),
     name:'Home'
 }

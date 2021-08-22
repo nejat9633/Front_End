@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mx-lg">
+  <v-container class="mx-lg my-12" >
     <v-row class="mx-16">
       <v-col class="mx-15">
         <v-row class="mx-9" justify="center">
@@ -64,7 +64,7 @@
             <v-row class="pt-4 mt-4" justify="center">
         
               <v-btn
-                href="https://github.com/vuetifyjs/vuetify/releases/latest"
+                href="http://localhost:8081/#/signup"
                 target="_blank"
                 text--blue
                 elevation="0"
