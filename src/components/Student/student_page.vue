@@ -1,56 +1,52 @@
 <template>
 <!-- try to make the navigation drawer from the app.vue disappear!! -->
+
  <v-app id="inspire">
     <v-navigation-drawer 
-    v-model="drawer"
-    app>
+       v-model="drawer" 
+       app>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6">
+          <v-list-item-title class="text-h6 ">
             AASTU Student's Center
           </v-list-item-title>
-          <!--
-          <v-list-item-subtitle>
-            
-          </v-list-item-subtitle>
-          -->
         </v-list-item-content>
       </v-list-item>
 
       <v-divider></v-divider>
 
- <v-list>
-          <v-list-item class="px-2">
-            <v-list-item-avatar color="primary">
-           <!-- <span class="white--text text-h5">{{gh}}</span>-->
-           <v-icon dark>
-        mdi-account
-      </v-icon>
-            </v-list-item-avatar>
-
-          <v-list-item link>
-            <v-list-item-content>
-              <v-list-item-title class="text-h6">
-                someone 
-              </v-list-item-title>
-              <v-list-item-subtitle>someone@gmail.com</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item> </v-list-item>
-        </v-list>
-
+        <v-card v-for="person in Personal_info" :key="person.name" flat >
+          <v-responsive class="pt-4 pl-5 ">
+          <v-avatar size="60" >
+          <v-img :src="require('../../assets/avatar_1.png')" /> 
+  <!--
+    <img :src="person.avatar">
+    <v-img :src='person.avatar'/>
+             
+             <v-img :src="require(person.avatar)" />
+        --> 
+         </v-avatar>
+          </v-responsive>
+         
+          <v-col>
+          <div class="text-h6" >{{ person.name }}</div>
+          <div class="grey--text" >{{ person.id }}</div>
+          <div class="grey--text" >{{ person.department }}</div>
+       
+          </v-col>
+       </v-card>
         <v-divider></v-divider>
-
 
       <v-list
         dense
-        nav
-      >
+        nav>
+
         <v-list-item
           v-for="item in items"
           :key="item.title"
           :to="item.to"
-          link
-        >
+          link>
+
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -60,7 +56,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-<!---->
+
 <v-list-group
           :value="true"
           no-action
@@ -68,23 +64,22 @@
         >
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title ><strong>My Menu</strong></v-list-item-title>
+              <v-list-item-title > <strong>My Menu</strong> </v-list-item-title>
             </v-list-item-content>
           </template>
 
-          <v-list-item
-            v-for="([title, icon], i) in admins"
-            :key="i"
-            link
-          >
-            <v-list-item-title v-text="title"></v-list-item-title>
+<v-list-item
+  v-for="todo in access" 
+  :key="todo.title"
+  :to="todo.to"
+  link
+>
+<v-list-item-title> {{todo.title}} </v-list-item-title>
+<v-list-item-icon> <v-icon>{{todo.icon}}</v-icon> </v-list-item-icon>
+</v-list-item>
 
-            <v-list-item-icon>
-              <v-icon v-text="icon"></v-icon>
-            </v-list-item-icon>
-          </v-list-item>
         </v-list-group>
-<!--   -->
+  
       <template v-slot:append>
         <div class="pa-2" >
           <v-btn block dark>
@@ -111,19 +106,13 @@
               width="100"
               max-height="60"
             />
-      <v-toolbar-title> AASTU Student's Center </v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-app-bar>
-
-    <v-main>
-        <router-view> </router-view>
-    </v-main>
-
- <v-spacer></v-spacer>
-  
+      <v-toolbar-title> AASTU STUDENT'S CENTER</v-toolbar-title>
+    </v-app-bar> 
   </v-app>
   
 </template>
+
+
 
 <script>
 
@@ -147,11 +136,15 @@ export default {
           {text: 'About Us', to: '/about'}
         ],
 
-         admins: [
-            ['My Materials','mdi-note multiple'],
-        ['My Questions', 'mdi-frequently-asked-questions'],
-        ['My Clubs', 'mdi-account-group'] 
-      ]
+        access: [
+          {title: 'My Materials' ,icon: 'mdi-note multiple', to: '/material'},
+          {title: 'My Questions' ,icon: 'mdi-frequently-asked-questions', to: '/question'},
+          {title: 'My Clubs' ,icon: 'mdi-account-group', to: ''},
+             ],
+
+      Personal_info: [
+          {name:'someone', id:'ETS 1010/10', department: 'SWE', avatar: '../../assets/avatar_2.png'}
+            ],
   }),
 };
 </script>

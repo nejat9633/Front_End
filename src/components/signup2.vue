@@ -47,7 +47,6 @@
         ></v-text-field>
       </validation-provider>
       <validation-provider
-        v-slot="{ errors }"
         name="select"
         rules="required"
       >
@@ -57,8 +56,9 @@
           :error-messages="errors"
           label="Select"
           data-vv-name="select"
-          required
-      </validation-provider>
+          required>
+     </validation-provider>
+
       <validation-provider
         v-slot="{ errors }"
         rules="required"
@@ -151,4 +151,35 @@
       },
     },
   }
+
+
+
+
+
+/**
+ @input="$v.password.$touch()"
+          @blur="$v.password.$touch()"
+
+            @input="$v.email.$touch()"
+      @blur="$v.email.$touch()"
+
+       @input="$v.last_name.$touch()"
+      @blur="$v.last_name.$touch()"
+
+       @input="$v.first_name.$touch()"
+      @blur="$v.first_name.$touch()"
+
+       :error-messages="emailErrors"
+      :error-messages="nameErrors"
+      :error-messages="nameErrors"
+
+
+computed:{
+        nameErrors () {
+    const errors = []
+    if (!this.$v.name.$dirty) return errors
+    !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
+    !this.$v.name.required && errors.push('Name is required.')
+    return errors}}
+**/
 </script>

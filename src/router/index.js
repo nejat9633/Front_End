@@ -6,6 +6,8 @@ import Home from '../components/Home.vue'
 import signup from '../components/signup.vue'
 import student_page from '../components/Student/student_page.vue'
 import material from '../components/Student/material.vue'
+import aastuhome from '../components/aastuhome.vue'
+import MyQuestion from '../components/Student/my_question.vue'
 
 
 Vue.use(VueRouter)
@@ -37,6 +39,16 @@ const routes = [
   path: '/material',
   name: 'material',
   component: material
+},
+{
+  path: '/question',
+  name: 'my_question',
+  component: MyQuestion
+},
+{
+  path: '/aastuhome',
+  name: 'aastuhome',
+  component: aastuhome
 },
 
 {

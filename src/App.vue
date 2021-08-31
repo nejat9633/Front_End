@@ -1,12 +1,13 @@
 <template>
 
- <v-app id="inspire">
+ <v-app id="inspire" >
     <v-navigation-drawer 
     v-model="drawer"
-    app>
+    app
+    >
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6">
+          <v-list-item-title class="text-h6" >
             AASTU Student's Center
           </v-list-item-title>
           <!--
@@ -42,11 +43,12 @@
   
     <v-app-bar
       app
-     dark
+      dark
       height="80"
       scroll-target="#scrolling-techniques-2"
+     
     >
-   <v-app-bar-nav-icon @click="drawer = !drawer "></v-app-bar-nav-icon>
+   <v-app-bar-nav-icon @click="drawer = !drawer " ></v-app-bar-nav-icon>
 
     <v-img
               alt="Vuetify Logo"
@@ -57,7 +59,7 @@
               width="100"
               max-height="60"
             />
-      <v-toolbar-title> AASTU Student's Center </v-toolbar-title>
+      <v-toolbar-title class="text-uppercase"> AASTU Student's Center </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
 
@@ -66,7 +68,7 @@
     </v-main>
 
  <v-spacer></v-spacer>
-    <v-footer dark padless color="black">
+    <v-footer dark padless color="black" >
       <v-col class="text-center" cols="12">
         {{ new Date().getFullYear() }} —
         <v-btn target="_blank" text v-for="link in links" :key="link.text" router :to="link.to" >
@@ -90,7 +92,7 @@ export default {
   },
   
   data: () => ({
-    drawer: null,
+    drawer: false,
     items: [
           { title: 'Home', icon: 'mdi-home', to:'/' },
           { title: 'Clubs', icon: 'mdi-account-group-outline', to:'' },

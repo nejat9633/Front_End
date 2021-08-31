@@ -1,4 +1,5 @@
 <template>
+<v-flex>
   <v-container class="mx-lg my-12" >
     <v-row class="mx-16">
       <v-col class="mx-15">
@@ -20,6 +21,9 @@
                   v-model="name"
                   :rules="nameRules"
                   label="Username"
+                  id="username"
+                  type="text"
+                  name="username"
                   required
                   outlined
                 >
@@ -34,6 +38,8 @@
                   :rules="passwordRules"
                   :counter="10"
                   label="Password"
+                  id="password"
+                  type="password"
                   required
                   :key="icon"
                   icon
@@ -49,8 +55,8 @@
               <v-row justify="center">
                 <v-btn
                   color="secondary-dark"
-                  @click="resetValidation"
-                  elevation="2"
+                  @click="submit"
+                  elevation="4"
                   justify="center"
                   text--white
                   class="d-flex align center"
@@ -89,16 +95,39 @@
         </v-row>
       </v-col>
     </v-row>
-
+ 
   </v-container>
+   </v-flex>
 </template>
 <script>
 export default {
   name: "login",
   data() {
     return {
+      name: '',
+      password: '',
       icon: "fa fa-lock",
-    };
-  },
-};
+      nameRules:
+      [
+        v => v.length >= 3 || 'Minimum length is 3 characters.'
+        
+      ],
+      passwordRules:
+      [
+        v => v.length >= 6 || 'Minimum length is 6 characters.'
+      ],
+    }
+     },
+    methods:
+    {
+      submit()
+      {
+        if(this.$refs.form.validate())
+        {
+        console.log(this.name, this.password)
+        }
+      }
+    },
+ 
+}
 </script>
