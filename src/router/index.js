@@ -8,6 +8,12 @@ import student_page from '../components/Student/student_page.vue'
 import material from '../components/Student/material.vue'
 import aastuhome from '../components/aastuhome.vue'
 import MyQuestion from '../components/Student/my_question.vue'
+import infoAdmin from '../views/infoAdmin.vue'
+import forumAdmin from '../views/forumAdmin.vue'
+import adminSignup from '../components/adminSignup.vue'
+import materialAdmin from '../views/materialAdmin.vue'
+//import student from '../views/student.vue'
+import clubPresident from '../views/clubPresident.vue'
 
 
 Vue.use(VueRouter)
@@ -57,6 +63,34 @@ const routes = [
   component: superadmin
 },
 
+{
+  path: '/infoAdmin',
+  name: 'infoAdmin',
+  component: infoAdmin,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/materialAdmin',
+  name: 'materialAdmin',
+  component: materialAdmin,
+  meta: {requiresAuth : true}
+},{
+  path: '/clubPresident',
+  name: 'clubPresident',
+  component: clubPresident,
+  meta: {requiresAuth : true}
+},{
+  path: '/forumAdmin',
+  name: 'forumAdmin',
+  component: forumAdmin,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/adminPassword',
+  name: 'adminPassword',
+  component: adminSignup,
+  meta: {requiresAuth : true}
+},
 
   {
     path: '/about',
@@ -67,6 +101,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
+/*router.beforeEach((to, from, next)=>{
+  if(to.matched.some(record => record.meta.requiresAuth)){
+    if(this.$store.getters.isLoggedIn){
+     next()
+    }
+    else{
+     next({
+       path: '/login',
+       query: {redirect: to.fullPath}
+     })
+     
+    }
+  }
+})*/
 
 const router = new VueRouter({
   routes

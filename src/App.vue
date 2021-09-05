@@ -83,7 +83,14 @@
 </template>
 
 <script>
-
+window.onbeforeunload = function(){ return 'your work would be lost'}
+/*window.onhashchange = ()=>{ 
+          localStorage.removeItem('tok')
+        localStorage.removeItem('user')
+        localStorage.removeItem('role')
+        localStorage.removeItem('status')
+        alert("you have been loggeg out.")
+   console.log("backbutton pressed!")}*/
 export default {
   name: 'App',
 

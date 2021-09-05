@@ -16,6 +16,18 @@
                   <h3>LOGIN</h3>
                 </v-form-title>
               </v-row>
+               <v-row>
+                <v-alert
+                  v-if="message != null"
+                  justify="center"
+                  outlined
+                  type="warning"
+                  prominent
+                  border="left"
+                >
+                  {{ message }}
+                </v-alert>
+              </v-row>
               <v-row justify="center">
                 <v-text-field
                   v-model="email"
@@ -55,7 +67,7 @@
               <v-row justify="center">
                 <v-btn
                   color="secondary-dark"
-                  @click="submit"
+                  @click="submit()"
                   elevation="4"
                   justify="center"
                   text--white
@@ -118,6 +130,8 @@ export default {
       [
         v => v.length >= 6 || 'Minimum length is 6 characters.'
       ],
+      response:'',
+      message: ''
     }
      },
     methods:
@@ -126,7 +140,7 @@ export default {
       {
         if(this.$refs.form.validate())
         {
-        console.log(this.name, this.password)
+        console.log(this.email, this.password)
         const credentials = {
         email: this.email,
         password: this.password,
@@ -142,7 +156,7 @@ export default {
             res.data.user.role != "student" &&
             res.data.user.passwordModified == false
           ) {
-            this.$router.push("/signup");
+            this.$router.push("/adminPassword");
           } else {
             console.log(res.status);
             this.$store
