@@ -30,8 +30,17 @@
   <v-card-text>
 
    <v-form class="px-3" >
+     <v-select
+            v-model="title" 
+            :items="titles"
+            label="Title of your question."
+            clearable
+            require
+            prepend-icon=" mdi-pencil"
+        >
+     </v-select>
         <v-textarea
-            v-model="question" 
+            v-model="description" 
             label="Enter your question"
             clearable
             prepend-icon=" mdi-pencil"
@@ -47,16 +56,16 @@
 
 </v-dialog>
 </v-container>
-<v-container>
-<v-card flat class="pa-5 my-3" color="grey lighten-4" v-for="question in questions" :key="question.id">
-    <v-layout row wrap :class="` pa-3 question ${question.id}`">
+<v-container v-if="status">
+<v-card flat class="pa-5 my-3" color="grey lighten-4" v-for="question in questionss" v-bind:key="question">
+    <v-layout >
       <v-flex >
       <v-avatar >
           <v-img :src="require('../../assets/avatar_1.png')" /> 
          <!--    <v-img :src="require(person.avatar)" />    -->
       </v-avatar>
-       <div class="caption black--text">{{question.username}}</div>
-        <div> {{question.content}} </div>
+       <div class="caption black--text">{{question.title}}</div>
+        <div> {{question.description}} </div>
 
         <v-card-actions class="pa-4 " flat>
 
@@ -101,6 +110,13 @@
 </v-card>
 
 </v-container>
+<v-container v-if="!status">
+   <v-flex>
+     <div>
+       <h5>{{message}}</h5>
+     </div>
+   </v-flex>
+</v-container>
 
 
 
@@ -113,14 +129,20 @@
 <script>
 
 import student_page from "@/components/Student/student_page.vue"
-
+import axios from 'axios'
+const url = 'http://localhost:8888/api/'
+const userId = localStorage.getItem('user');
+const token = localStorage.getItem('tok');
 export default {
  
     data()
      {
      return { 
         question: '' ,
-     
+         message: '',
+         status: true, 
+         questionss:'',
+         titles:['programming', 'Graphics', 'Math', 'vocabulary','Physics', 'General IT' ],
         questions: [
           {
            id: "1", username: "someone", content: " sthwhere the questions are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora."
@@ -135,11 +157,31 @@ export default {
    {
       student_page
    },
+   mounted(){
+        console.log(this.question)
+        axios.get(`${url}myQuestions/${userId}`, 
+                  { headers: {'Authorization': `Bearer ${token}`}})
+             .then((res) => {
+               
+                 if(res.data.status == 'failure'){
+                   this.message = res.data.message
+                   this.status = false
+                 }
+                 else{
+                     this.questionss = res.data.questions
+                     this.status= true
+                     console.log("true" + res.data)
+                 }
+             })
+             .catch((err)=>{
+               this.message = "An error has been occured from server."
+             })
+   },
 methods: {
 
     submit()
     {
-        console.log(this.question)
+
      
     },
 
