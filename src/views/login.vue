@@ -18,12 +18,12 @@
               </v-row>
               <v-row justify="center">
                 <v-text-field
-                  v-model="name"
-                  :rules="nameRules"
-                  label="Username"
-                  id="username"
-                  type="text"
-                  name="username"
+                  v-model="email"
+                  :rules="emailRules"
+                  label="E-mail"
+                  id="email"
+                  type="email"
+                  name="email"
                   required
                   outlined
                 >
@@ -100,16 +100,18 @@
    </v-flex>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: "login",
   data() {
     return {
-      name: '',
+      email: '',
       password: '',
       icon: "fa fa-lock",
-      nameRules:
+      emailRules:
       [
-        v => v.length >= 3 || 'Minimum length is 3 characters.'
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
         
       ],
       passwordRules:
@@ -125,6 +127,61 @@ export default {
         if(this.$refs.form.validate())
         {
         console.log(this.name, this.password)
+        const credentials = {
+        email: this.email,
+        password: this.password,
+      };
+
+      axios
+        .post("http://localhost:8888/api/login", credentials)
+        .then((res) => {
+          this.response = res.data;
+          if (res.status == 200 && res.data.status == "failure") {
+            this.message = res.data.message;
+          } else if (
+            res.data.user.role != "student" &&
+            res.data.user.passwordModified == false
+          ) {
+            this.$router.push("/signup");
+          } else {
+            console.log(res.status);
+            this.$store
+              .dispatch("login", res.data)
+              .then(() => {
+                if (res.data.user.role == "student") {
+                  this.$router.push("/student");
+                } else if (res.data.user.role == "forum-admin") {
+                  this.$router.push("/forumAdmin");
+                } else if (res.data.user.role == "info-admin") {
+                  this.$router.push("/infoAdmin");
+                } else if (res.data.user.role == "material-admin") {
+                  this.$router.push("/materialAdmin");
+                } else if (res.data.user.role == "club-president") {
+                  this.$router.push("/clubPresident");
+                } else {
+                  this.$router.push("/super");
+                }
+              })
+              .catch(() => {
+                this.cred = " Wrong Input";
+              });
+          }
+        })
+        .catch((err) => {
+          this.message = " Wrong Password";
+        });
+
+      /* axios.post('http://localhost:8888/api/login', credentials, {
+       //headers:{
+       //}
+     //})
+           .then(res => {
+             this.response = res
+           })
+           .catch(error => {
+             this.response = error
+           });*/
+ 
         }
       }
     },
