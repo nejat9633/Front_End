@@ -12,14 +12,16 @@ export default new Vuex.Store({
     userId: localStorage.getItem('user'),
     token: localStorage.getItem('tok'),
     loggedIn: localStorage.getItem('status'),
-    role: localStorage.getItem('role')
+    role: localStorage.getItem('role'),
+    QId: localStorage.getItem('QId')
   },
   mutations: {
    set_token: (state, token, userId) => {state.token = token;
                state.userId = userId},
    auth_request: state => state.loggedIn = 'loading',
    auth_error: state => state.loggedIn = 'failure',
-   logout: state => {state.token = ''; state.userId = ''}
+   logout: state => {state.token = ''; state.userId = ''},
+   set_QId: state => state.QId = ''
   },
   getters:{
      isLoggedIn: state =>state.loggedIn,
@@ -54,6 +56,10 @@ export default new Vuex.Store({
         //})
     //  })
 
+    },
+    Qdata({commit}, question){
+      localStorage.setItem('QId', question._id);
+      commit('set_QId', question._id)
     },
     logout({commit}){
       return new Promise ((resolve, reject) =>{

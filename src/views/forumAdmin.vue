@@ -34,7 +34,7 @@
           <v-row class="my-4">
             <div class="mx-4">
               <v-btn elevation="0" plain color="black" target="_blank">
-                <span>Admins</span>
+                <span>Question</span>
               </v-btn>
             </div>
           </v-row>
@@ -153,17 +153,7 @@ export default {
         }
     },
     mounted(){
-       return axios.get(`${url}`)
-              .then((res)=>{
-               this.response = res
-               this.material_admin = res.data.data.material_admin
-               this.info_admin = res.data.data.info_admin
-               this.forum_admin = res.data.data.forum_admin
-               this.club_president = res.data.data.club_president
-       })
-       .catch((err)=>{
-            this.response = err
-       })
+      
     },
     methods:{
         run(){

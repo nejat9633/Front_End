@@ -2,7 +2,7 @@
 <div>
 <v-container  class="my-5">  
 
-<v-dialog max-width="600px">
+<v-dialog v-model="dialog" max-width="600px">
 
 <template v-slot:activator="{ on, attrs }">
 
@@ -14,7 +14,7 @@
           flat
           large   
           >
-        <v-icon class="pr-3">mdi-plus-circle</v-icon>
+        <v-icon class="fa fa-plus pr-3">mdi-plus-circle</v-icon>
           New Question
         </v-btn>
    
@@ -31,7 +31,7 @@
 
    <v-form class="px-3" >
      <v-select
-            v-model="title" 
+            v-model="catagory" 
             :items="titles"
             label="Title of your question."
             clearable
@@ -39,6 +39,14 @@
             prepend-icon=" mdi-pencil"
         >
      </v-select>
+             <v-text-field
+            v-model="title" 
+            label="Title of your question"
+            clearable
+            prepend-icon=" mdi-pencil"
+        >
+      
+             </v-text-field>
         <v-textarea
             v-model="description" 
             label="Enter your question"
@@ -47,7 +55,19 @@
         >
       
         </v-textarea>
-        <v-btn flat class="success mx-0 mt-3" @click="submit"> Add Question </v-btn>
+
+        <v-btn flat class="success px-2 mx-0 mt-3" @click="submit"> Add Question </v-btn>
+        <v-btn flat class="success px-2 mx-0 mt-3" @click="dialog = false"> Done </v-btn>
+        <v-spacer></v-spacer>
+        <v-alert
+        v-model="alert"
+         border='left'
+         colored-border
+         elevation="2"
+         color="light-blue accent-4"
+         >
+          {{message_for_new}}
+        </v-alert>
      </v-form>
 
   </v-card-text>  
@@ -76,28 +96,28 @@
         @click="view"
           v-bind="attrs"
           v-on="on"
-        > <v-icon >mdi-eye</v-icon></v-btn>
+        > <v-icon class="fa fa-eye">mdi-eye</v-icon></v-btn>
       </template>
       <span>View Answers</span>
       </v-tooltip>
 
         <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class="success pa-3 mx-1"
-         @click="edit" 
+        <v-btn class="fa fa-pencil success pa-3 mx-1"
+         @click="edit()" 
           v-bind="attrs"
-          v-on="on"><v-icon >mdi-pencil</v-icon></v-btn>
+          v-on="on"><v-icon class="fa fa-pencil-alt" >mdi-pencil</v-icon></v-btn>
      </template>
       <span>Edit Question</span>
       </v-tooltip>
 
      <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class="pa-3 mx-1" 
+        <v-btn class=" pa-3 mx-1" 
         color="red lighten-1" 
         @click="erase" 
           v-bind="attrs"
-          v-on="on"><v-icon >mdi-delete</v-icon></v-btn>
+          v-on="on"><v-icon class="fa fa-trash-alt">mdi-delete</v-icon></v-btn>
         </template>
       <span>Delete Question</span>
       </v-tooltip>
@@ -130,6 +150,7 @@
 
 import student_page from "@/components/Student/student_page.vue"
 import axios from 'axios'
+//import ApiService from '../../ApiServices'
 const url = 'http://localhost:8888/api/'
 const userId = localStorage.getItem('user');
 const token = localStorage.getItem('tok');
@@ -139,7 +160,13 @@ export default {
      {
      return { 
         question: '' ,
+        dialog: false,
+        alert:false,
+         message_for_new: '',
          message: '',
+         description:'',
+         catagory:'',
+         title: '',
          status: true, 
          questionss:'',
          titles:['programming', 'Graphics', 'Math', 'vocabulary','Physics', 'General IT' ],
@@ -181,7 +208,31 @@ methods: {
 
     submit()
     {
+      let data ={
+        title: this.title,
+        description: this.description,
+        catagory: this.catagory
+      }
+      return axios.post(`${url}postQuestion/${userId}`, data,
+                  {headers: {'Authorization': `Bearer ${token}`}}
+                  )
+                  .then((res) => {
+                    if(res.data.status == 'success'){
+                      this.$store.dispatch('Qdata', res.data.result)
+                                .then((res)=>{
+                                  this.questionss.push(res.data.result)
+                                  this.alert = true
+                                  this.message_for_new = "Question Added successfuly"
+                                })
+                                .catch((err)=>{
+                                  this.message_for_new = "Server Error"
+                                })
 
+                    }
+                    else{
+                      this.message_for_new = res.data.message 
+                    }
+                  })
      
     },
 
@@ -192,12 +243,26 @@ methods: {
 
     erase()
     {
-
+     
     },
 
     edit( )
     {
-
+      let data = {
+        title : this.title,
+        description: this.description,
+        catagory: this.catagory
+      }
+return axios.put(`${url}editQuestion/${this.$store.QId}`,data, {headers: {
+        'Authorization': `Bearer ${token}`
+    }}).then((res)=>{
+      this.questionss.push.updated
+      this.message_for_new = 'Question Edited successfuly'
+    }).catch((err)=>{
+      this.message_for_new = "Error Occured"
+    })
+                  
+                
     },
 
 
