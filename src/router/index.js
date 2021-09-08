@@ -3,16 +3,37 @@ import VueRouter from 'vue-router'
 import login from '../views/login.vue'
 import superadmin from '../components/superadmin.vue'
 import Home from '../components/Home.vue'
+import vue from '../components/HelloWorld.vue'
 import signup from '../components/signup.vue'
 import student_page from '../components/Student/student_page.vue'
 import material from '../components/Student/material.vue'
 import aastuhome from '../components/aastuhome.vue'
 import MyQuestion from '../components/Student/my_question.vue'
+//import infoAdmin from '../views/infoAdmin.vue'
+import forumAdmin from '../components/forumAdmin/admin_page.vue'
+import adminSignup from '../components/adminSignup.vue'
+import materialAdmin from '../views/materialAdmin.vue'
+import reports from '../components/forumAdmin/reports.vue'
+import forumstudents from '../components/forumAdmin/students.vue'
+import forumfeedbacks from '../components/forumAdmin/feedbacks.vue'
+import forumquestions from '../components/forumAdmin/questions.vue'
+import events from '../components/infoAdmin/events.vue'
+import infoAdmin from '../components/infoAdmin/admin_page.vue'
+import forum from '../components/forum.vue'
+import questionanswer from '../components/forumQ&A.vue'
+import forgotPassword from '../views/forgotPassword.vue'
+//import student from '../views/student.vue'
+import clubPresident from '../components/clubPresident/pres_Page.vue'
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/vue',
+    name: 'vue',
+    component: vue
+  },
   {
     path: '/',
     name: 'Home',
@@ -29,6 +50,16 @@ const routes = [
   path: '/signup',
   name: 'signup',
   component: signup
+},
+{
+  path: '/forum',
+  name: 'forum',
+  component: forum
+},
+{
+  path: '/question&answer',
+  name: 'forum',
+  component: questionanswer
 },
 {
   path: '/student',
@@ -57,7 +88,70 @@ const routes = [
   component: superadmin
 },
 
+{
+  path: '/infoAdmin',
+  name: 'infoAdmin',
+  component: infoAdmin,
+  meta: {requiresAuth : true}
+},
 
+{
+  path: '/events',
+  name: 'events',
+  component: events,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/reports',
+  name: 'reports',
+  component: reports,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/forumstudents',
+  name: 'forumstudents',
+  component: forumstudents,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/forumfeedbacks',
+  name: 'forumfeedbacks',
+  component: forumfeedbacks,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/questions',
+  name: 'forumquestions',
+  component: forumquestions,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/materialAdmin',
+  name: 'materialAdmin',
+  component: materialAdmin,
+  meta: {requiresAuth : true}
+},{
+  path: '/clubPresident',
+  name: 'clubPresident',
+  component: clubPresident,
+  meta: {requiresAuth : true}
+},{
+  path: '/forumAdmin',
+  name: 'forumAdmin',
+  component: forumAdmin,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/adminPassword',
+  name: 'adminPassword',
+  component: adminSignup,
+  meta: {requiresAuth : true}
+},
+{
+  path: '/forgotPassword',
+  name: 'forgotPassword',
+  component: forgotPassword,
+},
   {
     path: '/about',
     name: 'About',
@@ -67,6 +161,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
+/*router.beforeEach((to, from, next)=>{
+  if(to.matched.some(record => record.meta.requiresAuth)){
+    if(this.$store.getters.isLoggedIn){
+     next()
+    }
+    else{
+     next({
+       path: '/login',
+       query: {redirect: to.fullPath}
+     })
+     
+    }
+  }
+})*/
 
 const router = new VueRouter({
   routes

@@ -16,14 +16,26 @@
                   <h3>LOGIN</h3>
                 </v-form-title>
               </v-row>
+               <v-row>
+                <v-alert
+                  v-if="message"
+                  justify="center"
+                  outlined
+                  type="warning"
+                  prominent
+                  border="left"
+                >
+                  {{ message }}
+                </v-alert>
+              </v-row>
               <v-row justify="center">
                 <v-text-field
-                  v-model="name"
-                  :rules="nameRules"
-                  label="Username"
-                  id="username"
-                  type="text"
-                  name="username"
+                  v-model="email"
+                  :rules="emailRules"
+                  label="E-mail"
+                  id="email"
+                  type="email"
+                  name="email"
                   required
                   outlined
                 >
@@ -55,7 +67,7 @@
               <v-row justify="center">
                 <v-btn
                   color="secondary-dark"
-                  @click="submit"
+                  @click="submit()"
                   elevation="4"
                   justify="center"
                   text--white
@@ -70,7 +82,7 @@
             <v-row class="pt-4 mt-4" justify="center">
         
               <v-btn
-                href="http://localhost:8081/#/signup"
+                href="http://localhost:8080/#/signup"
                 target="_blank"
                 text--blue
                 elevation="0"
@@ -85,7 +97,12 @@
             <v-row class="pt-4 mt-4" justify="center"   >
          
                 <div class="d-flex align-center ">
-                  <v-btn elevation="0" x-small bottom>
+                  <v-btn 
+                  elevation="0"
+                   x-small
+                    bottom
+                   href="http://localhost:8080/#/forgotPassword"
+                    >
                       <h4 class="blue--text" > Forgot Password ? </h4>
                     </v-btn>
                 </div>
@@ -100,22 +117,26 @@
    </v-flex>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: "login",
   data() {
     return {
-      name: '',
+      email: '',
       password: '',
       icon: "fa fa-lock",
-      nameRules:
+      emailRules:
       [
-        v => v.length >= 3 || 'Minimum length is 3 characters.'
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
         
       ],
       passwordRules:
       [
         v => v.length >= 6 || 'Minimum length is 6 characters.'
       ],
+      response:'',
+      message: ''
     }
      },
     methods:
@@ -124,7 +145,62 @@ export default {
       {
         if(this.$refs.form.validate())
         {
-        console.log(this.name, this.password)
+        console.log(this.email, this.password)
+        const credentials = {
+        email: this.email,
+        password: this.password,
+      };
+
+      axios
+        .post("http://localhost:8888/api/login", credentials)
+        .then((res) => {
+          this.response = res.data;
+          if (res.status == 200 && res.data.status == "failure") {
+            this.message = res.data.message;
+          } else if (
+            res.data.user.role != "student" &&
+            res.data.user.passwordModified == false
+          ) {
+            this.$router.push("/adminPassword");
+          } else {
+            console.log(res.status);
+            this.$store
+              .dispatch("login", res.data)
+              .then(() => {
+                if (res.data.user.role == "student") {
+                  this.$router.push("/student");
+                } else if (res.data.user.role == "forum-admin") {
+                  this.$router.push("/forumAdmin");
+                } else if (res.data.user.role == "info-admin") {
+                  this.$router.push("/infoAdmin");
+                } else if (res.data.user.role == "material-admin") {
+                  this.$router.push("/materialAdmin");
+                } else if (res.data.user.role == "club-president") {
+                  this.$router.push("/clubPresident");
+                } else {
+                  this.$router.push("/super");
+                }
+              })
+              .catch(() => {
+                this.cred = " Wrong Input";
+              });
+          }
+        })
+        .catch((err) => {
+          this.message = " Wrong Password";
+        });
+
+      /* axios.post('http://localhost:8888/api/login', credentials, {
+       //headers:{
+       //}
+     //})
+           .then(res => {
+             this.response = res
+           })
+           .catch(error => {
+             this.response = error
+           });*/
+ 
         }
       }
     },
