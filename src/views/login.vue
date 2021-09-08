@@ -18,7 +18,7 @@
               </v-row>
                <v-row>
                 <v-alert
-                  v-if="message != null"
+                  v-if="message"
                   justify="center"
                   outlined
                   type="warning"
@@ -82,7 +82,7 @@
             <v-row class="pt-4 mt-4" justify="center">
         
               <v-btn
-                href="http://localhost:8081/#/signup"
+                href="http://localhost:8080/#/signup"
                 target="_blank"
                 text--blue
                 elevation="0"
@@ -97,7 +97,12 @@
             <v-row class="pt-4 mt-4" justify="center"   >
          
                 <div class="d-flex align-center ">
-                  <v-btn elevation="0" x-small bottom>
+                  <v-btn 
+                  elevation="0"
+                   x-small
+                    bottom
+                   href="http://localhost:8080/#/forgotPassword"
+                    >
                       <h4 class="blue--text" > Forgot Password ? </h4>
                     </v-btn>
                 </div>

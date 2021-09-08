@@ -122,6 +122,12 @@ export default {
  components: {
     
   },
+  methods:{
+    logout(){
+      localStorage.clear();
+      this.$router.push('/')
+    }
+  },
   
   data: () => ({
     drawer: null,

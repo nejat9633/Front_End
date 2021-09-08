@@ -1,6 +1,50 @@
 <template>
+<v-flex>
   <div>
+    <v-bottom-navigation
+    :value="value"
+    color="teal"
+    grow
+  >
+        <v-select
+          :items="items"
+          label="Category"
+          max-width="500"
+           class="ma-1"
+        ></v-select>
+    
+
+    <v-btn max-width="500" min-width >
+      <span>What do you want to ask?</span>
+
+     
+    </v-btn>
+
+     <v-text-field
+            v-model="search"
+
+            clearable
+            flat
+            solo-inverted
+            hide-details
+            prepend-inner-icon="mdi-magnify"
+            label="Search"
+            max-width="500"
+            class="ma-1"
+          ></v-text-field>
+  </v-bottom-navigation>    
     <v-container>
+      <v-alert
+      v-if="message"
+      border="left"
+      colored-border
+      color="deep-blue accent-4"
+      elevation="2"
+    >
+      Aliquam eu nunc. Fusce commodo aliquam arcu. In consectetuer turpis ut velit. Nulla facilisi..
+
+      Morbi mollis tellus ac sapien. Fusce vel dui. Praesent ut ligula non mi varius sagittis. Vivamus consectetuer hendrerit lacus. Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi.
+    </v-alert>
       <v-card
         v-for="questn in questions"
         v-bind:key="questn"
@@ -88,6 +132,7 @@
       {{ answers }}
     </v-container>
   </div>
+  </v-flex>
 </template>
 <script>
 const url = "http://localhost:8888/api/";

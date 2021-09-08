@@ -19,8 +19,9 @@ import forumfeedbacks from '../components/forumAdmin/feedbacks.vue'
 import forumquestions from '../components/forumAdmin/questions.vue'
 import events from '../components/infoAdmin/events.vue'
 import infoAdmin from '../components/infoAdmin/admin_page.vue'
-import forum from '../views/forum.vue'
-
+import forum from '../components/forum.vue'
+import questionanswer from '../components/forumQ&A.vue'
+import forgotPassword from '../views/forgotPassword.vue'
 //import student from '../views/student.vue'
 import clubPresident from '../components/clubPresident/pres_Page.vue'
 
@@ -54,6 +55,11 @@ const routes = [
   path: '/forum',
   name: 'forum',
   component: forum
+},
+{
+  path: '/question&answer',
+  name: 'forum',
+  component: questionanswer
 },
 {
   path: '/student',
@@ -141,7 +147,11 @@ const routes = [
   component: adminSignup,
   meta: {requiresAuth : true}
 },
-
+{
+  path: '/forgotPassword',
+  name: 'forgotPassword',
+  component: forgotPassword,
+},
   {
     path: '/about',
     name: 'About',

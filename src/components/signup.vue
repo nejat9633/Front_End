@@ -21,6 +21,19 @@
                   <h3>SIGN UP</h3>
                 </v-form-title>
               </v-card-title>
+              <v-row>
+                <v-alert
+                  v-if="message"
+                  justify="center"
+                  outlined
+                  type="warning"
+                  prominent
+                  border="left"
+                >
+                  {{ message }}
+                </v-alert>
+              </v-row>
+
               
             <v-row justify="center">
               <v-text-field
@@ -45,7 +58,24 @@
       >
       </v-text-field>
     </v-row>
-
+                <v-row justify="center">
+              <v-text-field
+              v-model="username"
+              :rules="nameRules"
+              label="Username"
+              required
+              outlined
+              clearable
+              >
+              </v-text-field>
+            </v-row>
+          <v-row>
+        <v-select
+        v-model="department"
+          :items="items"
+          label="Department"
+        ></v-select>
+      </v-row>
     <v-row justify="center">
      <v-text-field
       v-model="email"
@@ -70,7 +100,6 @@
           >
          </v-text-field>
       </v-row>
-
               <v-row justify="center">
                 <v-btn
                   color="green darken-1"
@@ -104,6 +133,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default 
 {
@@ -112,7 +142,10 @@ export default
         first_name: '',
         last_name: '',
         email: '',
+        message: '',
+        username:'',
         password:'',
+        department:'',
       nameRules: 
       [
         v => !!v || 'Name is required',
@@ -129,6 +162,7 @@ export default
        v => !!v || 'E-mail is required',
        v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid',
       ],
+      items: ['Software Eng', 'Computer Science', "Electrical Eng"]
       
     }),
     
@@ -137,8 +171,33 @@ export default
 
     submit () 
     {
+        
          if(this.$refs.form.validate())
         {
+ 
+          let data ={
+            firstname : this.first_name,
+            lastname: this.last_name,
+            department: this.department,
+            email: this.email,
+            username: this.username,
+            password: this.password
+          }
+          axios.post('http://localhost:8888/api/signup', data )
+                .then((res)=>{
+                  if(res.data.status == 'failure'){
+                    this.message = res.data.message
+                  }
+                  else{
+                    this.$store.dispatch('login', res.data).then(()=>{
+                      this.$router.push('/student');
+                    }).catch(()=>{
+
+                    })
+                  }
+          }).catch(()=>{
+
+          })
         console.log(this.first_name, this.last_name, this.email, this.password)
         }
       },
