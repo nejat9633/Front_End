@@ -15,6 +15,7 @@
         max-width="344"
        min-height="450" 
        max-height="650"
+ 
        >
         <v-img src="../assets/notice1.jpg" height="350" contain></v-img>
 
@@ -59,6 +60,7 @@
     </template>
   </v-hover>
 </v-col>
+
 
 <v-col>
   <v-hover>
@@ -167,23 +169,6 @@
   </v-hover>
   </v-col>
 
-         <!--   
-           DON'T DELETE 
-           we may need this !!
-
-            <v-col>
-                <v-row class="mt-16">
-                </v-row>
-                 <v-row class="mt-16">
-                </v-row>
-                <v-row class="mt-16">
-                <v-btn elevation="0" plain class="mt-16" color="blue" >
-                 <v-icon x-large class="fa fa-angle-right"></v-icon>
-                </v-btn>
-                </v-row>
-            </v-col>
-             -->
-
         </v-row>
     </v-container>
 </template>
@@ -194,5 +179,10 @@ data: () => ({
       alert: false
     }),
     name:'Home'
+ 
+
+
+
+
 }
 </script>

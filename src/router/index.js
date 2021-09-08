@@ -8,7 +8,9 @@ import student_page from '../components/Student/student_page.vue'
 import material from '../components/Student/material.vue'
 import aastuhome from '../components/aastuhome.vue'
 import MyQuestion from '../components/Student/my_question.vue'
-
+import MyClubs from '../components/Student/my_clubs.vue'
+import tester from '../components/tester.vue'
+import forum from '../components/forum.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +20,11 @@ const routes = [
     name: 'Home',
     component: Home
   },
-
+  {
+    path: '/tester',
+    name: 'tester',
+    component: tester
+  },
   {
     path: '/login',
     name: 'login',
@@ -29,6 +35,11 @@ const routes = [
   path: '/signup',
   name: 'signup',
   component: signup
+},
+{
+  path: '/forum',
+  name: 'forum',
+  component: forum
 },
 {
   path: '/student',
@@ -44,6 +55,11 @@ const routes = [
   path: '/question',
   name: 'my_question',
   component: MyQuestion
+},
+{
+  path: '/myclubs',
+  name: 'my_clubs',
+  component: MyClubs
 },
 {
   path: '/aastuhome',

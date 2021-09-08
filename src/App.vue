@@ -96,7 +96,7 @@ export default {
     items: [
           { title: 'Home', icon: 'mdi-home', to:'/' },
           { title: 'Clubs', icon: 'mdi-account-group-outline', to:'' },
-          { title: 'Forum', icon: 'mdi-forum-outline' , to:'' },
+          { title: 'Forum', icon: 'mdi-forum-outline' , to:'/forum' },
           { title: 'Login', icon: 'mdi-login-variant', to:'/login' },
         ],
         links: [
