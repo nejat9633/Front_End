@@ -11,6 +11,7 @@ import MyQuestion from '../components/Student/my_question.vue'
 import MyClubs from '../components/Student/my_clubs.vue'
 import tester from '../components/tester.vue'
 import forum from '../components/forum.vue'
+import clubs from '../components/clubs.vue'
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ const routes = [
   path: '/forum',
   name: 'forum',
   component: forum
+},
+{
+  path: '/clubs',
+  name: 'clubs',
+  component: clubs
 },
 {
   path: '/student',

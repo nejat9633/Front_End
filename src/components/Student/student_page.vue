@@ -48,7 +48,7 @@
           link>
 
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon color="primary">{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -75,7 +75,7 @@
   link
 >
 <v-list-item-title> {{todo.title}} </v-list-item-title>
-<v-list-item-icon> <v-icon>{{todo.icon}}</v-icon> </v-list-item-icon>
+<v-list-item-icon> <v-icon color="primary">{{todo.icon}}</v-icon> </v-list-item-icon>
 </v-list-item>
 
         </v-list-group>

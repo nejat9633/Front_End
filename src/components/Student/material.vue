@@ -85,7 +85,7 @@
              href="https://www.koziel.fr/18894-pdt_540/wall-of-roses-mural.jpg"
              download
              >
-          <v-icon>mdi-download </v-icon>
+          <v-icon color="primary">mdi-download </v-icon>
            </v-btn>
          </template>
         <span> Download Course Outline and Project Template </span>

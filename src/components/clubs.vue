@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
                 <div  class="pa-3  text-h5 dark" >
-                    <span> Latest Events </span>
+                    <span> Clubs in AASTU </span>
                 </div>
         </v-row>
 <template >
@@ -19,14 +19,14 @@
     <template v-slot:default="{ hover }"  >
       <v-card
         class="mx-auto"
-        max-width="344"
-       min-height="450" 
-       max-height="650"
+        max-width="300"
+       min-height="300" 
+      
        >
 
         <v-img  :src="note.image" 
     
-        height="350"
+        height="200"
          contain ></v-img>
 
         <v-card-text>
@@ -65,7 +65,18 @@
       </v-card>
     </template>
   </v-hover>
+  <v-flex> 
+    <v-btn
+  color="pink"
+  dark
+  class="ma-2"
+  :style="{left: '50%', transform:'translateX(-50%)'}"  > 
+        apply
+    </v-btn>
+ 
+  </v-flex>
 </v-col>
+
 </v-row>
  </v-container>
 
@@ -83,8 +94,8 @@ data() {
        name:'tester',
         notice: [
           {
-          name: "charity club",
-          description: " Travel to the best outdoor experience on planet Earth. A vacation you will never forget!", 
+          name: "AASTU charity club",
+          description: "  A vacation you will never forget!", 
           content: " sthwhere the qclubs are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora.",
           image: require("../assets/notice1.jpg")
           },
@@ -96,14 +107,14 @@ data() {
             image: require('../assets/notice1.jpg')
          },
          { 
-            name: " AASTU Free Tutor",
-            description: "Travel to the best outdoor experience on planet Earth. A vacation you will never forget! ",
+            name: " AASTU Multimedia Club",
+            description: "Tation you will never forget! ",
             content: " Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. ",
             image: require("../assets/notice2.jpg")
          },
            { 
-            name: " AASTU Free Tutor",
-            description: "Travel to the best outdoor experience on planet Earth. A vacation you will never forget! ",
+            name: " AASTU Innovation Club",
+            description: "Travel to the best outdoor experi",
             content: " Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. ",
             image: require("../assets/notice2.jpg")
          },

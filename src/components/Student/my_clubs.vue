@@ -1,6 +1,11 @@
 <template>
 <v-flex >
   <v-container fluid pa-5>
+   <v-row>
+                <div  class="pa-3 mb-3 text-h5 dark"  >
+                    <span > CLUBS YOU ARE A MEMBER OF   </span>
+                </div>
+        </v-row>
     <v-data-iterator
       :items="items"
       :items-per-page.sync="itemsPerPage"
@@ -77,35 +82,76 @@
             lg="3"
           >
 
-            <v-card>
+          <v-hover>
+    <template v-slot:default="{ hover }"  >
+      <v-card
+        class="mx-auto"
+        max-width="300"
+       min-height="300" 
+      
+       >
+
+        <v-img  :src="item.image" 
+    
+        height="200"
+         contain ></v-img>
+
+        <v-card-text>
+          <h2 class="text-h6 primary--text">
+           {{item.name}}
+          </h2>
+
+          {{item.descriiption}}  </v-card-text>
+
+        <v-fade-transition>
+          <v-overlay
+            v-if="hover"
+            absolute
+            color="#036358"  >
+
+             <div>
+            <v-btn v-if="!alert"
+        dark
+        @click="alert = true">See more info</v-btn>
+  
+          <v-alert
+      v-model="alert"
+      color="#212121"
+      dark
+      dismissible
+      border="top"
+      icon="mdi-dots-horizontal"
+      transition="scale-transition"   >
+
+     {{note.content}}
+    </v-alert>
+          </div>
+          
+          </v-overlay>
+        </v-fade-transition>
+      </v-card>
+    </template>
+          </v-hover>
+          <v-flex> 
+    <v-btn
+  color="pink"
+  dark
+  class="ma-2"
+  :style="{left: '50%', transform:'translateX(-50%)'}"  > 
+        Leave
+    </v-btn>
+ 
+  </v-flex>
+          <!--  <v-card >
+            <v-img :src="item.image"  height="200"
+         contain   ></v-img>
+
               <v-card-title class="subheading font-weight-bold">
                 {{ item.name }}
-              </v-card-title>
-
-              <v-divider></v-divider>
-
-              <v-list dense>
-                <v-list-item
-                  v-for="(key, index) in filteredKeys"
-                  :key="index"
-                >
-
-                  <v-list-item-content :class="{ 'blue--text': sortBy === key }">
-                    {{ key }}:
-                  </v-list-item-content>
-                  
-                  <v-list-item-content
-                    class="align-end"
-                    :class="{ 'blue--text': sortBy === key }"
-                  >
-                    {{ item[key.toLowerCase()] }}
-                  </v-list-item-content>
-                </v-list-item>
-                 
-              </v-list>
-              
+              </v-card-title> 
+              <v-divider></v-divider>             
             </v-card>
-           
+           -->
           </v-col>
         </v-row>
       </template>
@@ -184,7 +230,7 @@
 import student_page from "@/components/Student/student_page.vue"
  
 export default {
-   
+    
    components: {
     student_page
     },
@@ -192,42 +238,34 @@ export default {
     data () {
         
       return {
+        overlay: false,
+      alert: false,
+
         itemsPerPageArray: [4, 8, 12],
         search: '',
         filter: {},
         sortDesc: false,
         page: 1,
-        itemsPerPage: 4,
+        itemsPerPage: 8,
         sortBy: 'name',
         keys: [
           'Members', 
         ],
         items: [
           {
-            name: 'Data Structure',
-            year: 2,
+           name: "AASTU charity club",
+          description: "  A vacation you will never forget!", 
+          content: " sthwhere the qclubs are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora.",
+          image: require("../../assets/notice1.jpg")
            
           },
           {
-            name: 'Database ',
-             year: 2,
-           
+            name: " AASTU Multimedia Club",
+            description: "Tation you will never forget! ",
+            content: " Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. ",
+            image: require("../../assets/notice2.jpg")
           },
-          {
-            name: 'Web Design',
-            year: 2,
-           
-          },
-          {
-            name: 'Software Quality Assurance and Testing ',
-            year: 4,
-             
-          },
-          {
-            name: 'Programming I',
-             year: 1,
-            
-          },
+        
         ],
       }
     },

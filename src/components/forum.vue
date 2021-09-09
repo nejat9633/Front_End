@@ -46,7 +46,7 @@
     <v-layout row wrap :class="` pa-3 question ${question.id}`">
       <v-flex >
       <v-avatar >
-          <v-img :src="require('../assets/avatar_1.png')" /> 
+          <v-img :src= question.avatar /> 
          <!--    <v-img :src="require(person.avatar)" />    -->
       </v-avatar>
        <div class="caption black--text">{{question.username}}</div>
@@ -128,10 +128,10 @@ export default {
      
         questions: [
           {
-           id: "1", username: "someone", content: " sthwhere the questions are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora."
+           id: "1", username: "someone", avatar: require('../assets/avatar_1.png'), content: " sthwhere the questions are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora."
         , score: 0,  },
            {
-           id: "2", username: "someone",avatar: '../assets/avatar_2.png', content: " 2 question sthwhere the questions are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora."
+           id: "2", username: "someone",avatar: require('../assets/avatar_2.png'), content: " 2 question sthwhere the questions are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora."
           , score:0},
          ],    
        

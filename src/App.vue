@@ -31,7 +31,7 @@
           link
         >
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon color="primary" >{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -95,7 +95,7 @@ export default {
     drawer: false,
     items: [
           { title: 'Home', icon: 'mdi-home', to:'/' },
-          { title: 'Clubs', icon: 'mdi-account-group-outline', to:'' },
+          { title: 'Clubs', icon: 'mdi-account-group-outline', to:'/clubs' },
           { title: 'Forum', icon: 'mdi-forum-outline' , to:'/forum' },
           { title: 'Login', icon: 'mdi-login-variant', to:'/login' },
         ],
