@@ -65,33 +65,76 @@
       </v-card>
     </template>
   </v-hover>
-  <v-flex> 
+
+
+
+<v-dialog max-width="600px">
+
+<template v-slot:activator="{ on, attrs }">
+<v-flex> 
     <v-btn
   color="pink"
   dark
+   v-bind="attrs"
+          v-on="on"
   class="ma-2"
-  :style="{left: '50%', transform:'translateX(-50%)'}"  > 
+  :style="{left: '50%', transform:'translateX(-50%)'}" 
+  @click="apply()" > 
         apply
     </v-btn>
  
   </v-flex>
+      </template>
+
+<v-card>
+    <v-card-title> 
+        <h2>Add a New Question</h2>
+    </v-card-title>
+
+<v-divider></v-divider>
+
+  <v-card-text>
+
+   <v-form class="px-3" >
+
+        <v-text-field  label="Enter your department"
+            clearable>
+        </v-text-field>
+
+        <v-textarea  
+         v-model="reason" 
+         label="Why do you want to join this club? "
+           clearable
+          >
+        </v-textarea>
+       
+        <v-btn flat class="success mx-0 mt-3" @click="submit"> Submit Application </v-btn>
+     </v-form>
+  </v-card-text>  
+</v-card>
+</v-dialog>
+
 </v-col>
 
 </v-row>
  </v-container>
 
   </template>
+  <page-header/>
    </v-container>
 </template>
 
 <script>
+import pageHeader from './pageHeader.vue'
 export default {
+  components: { pageHeader },
    
 data() { 
   return{
       overlay: false,
       alert: false,
        name:'tester',
+       
         notice: [
           {
           name: "AASTU charity club",
@@ -101,7 +144,7 @@ data() {
           },
 
           {
-            name: "aastu sth",
+            name: "AASTU sth",
             description: "hello there",
             content: "lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth ",
             image: require('../assets/notice1.jpg')

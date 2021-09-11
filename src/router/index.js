@@ -6,12 +6,17 @@ import Home from '../components/Home.vue'
 import signup from '../components/signup.vue'
 import student_page from '../components/Student/student_page.vue'
 import material from '../components/Student/material.vue'
-import aastuhome from '../components/aastuhome.vue'
 import MyQuestion from '../components/Student/my_question.vue'
 import MyClubs from '../components/Student/my_clubs.vue'
 import tester from '../components/tester.vue'
 import forum from '../components/forum.vue'
 import clubs from '../components/clubs.vue'
+import pageHeader from '../components/pageHeader.vue'
+import forumAdmin from '../components/ForumAdmin/forumAdmin.vue'
+import report from '../components/ForumAdmin/report.vue'
+import banned from '../components/ForumAdmin/banned.vue'
+import clubPres from '../components/Club President/clubPres.vue'
+
 
 Vue.use(VueRouter)
 
@@ -20,6 +25,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+  path:'/pageHeader',
+  name: 'pageHeader',
+  component: pageHeader
   },
   {
     path: '/tester',
@@ -68,11 +78,25 @@ const routes = [
   component: MyClubs
 },
 {
-  path: '/aastuhome',
-  name: 'aastuhome',
-  component: aastuhome
+  path: '/forumAdmin',
+  name: 'forumAdmin',
+  component: forumAdmin
 },
-
+{
+  path: '/report',
+  name: 'report',
+  component: report
+},
+{
+  path: '/banned',
+  name: 'banned',
+  component: banned
+},
+{
+  path: '/clubPres',
+  name: 'clubPres',
+  component: clubPres
+},
 {
   path: '/super',
   name: 'super',

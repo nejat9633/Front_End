@@ -1,117 +1,102 @@
 <template>
-    <v-container>
-        <v-row>
-                <div  class="pa-3  text-h5 dark" >
-                    <span> Latest Events </span>
-                </div>
-        </v-row>
-<template >
-
- <v-container   >
-         <v-row >
-<v-col  v-for="(note) in notice"
-            :key="note"
-            cols="auto"
-            sm="6"
-            md="4"
-            lg="3">
- <v-hover>
-    <template v-slot:default="{ hover }"  >
-      <v-card
-        class="mx-auto"
-        max-width="344"
-       min-height="450" 
-       max-height="650"
-       >
-
-        <v-img  :src="note.image" 
-    
-        height="350"
-         contain ></v-img>
-
-        <v-card-text>
-          <h2 class="text-h6 primary--text">
-           {{note.name}}
-          </h2>
-
-          {{note.description}}  </v-card-text>
-
-        <v-fade-transition>
-          <v-overlay
-            v-if="hover"
-            absolute
-            color="#036358"  >
-
-             <div>
-            <v-btn v-if="!alert"
-        dark
-        @click="alert = true">See more info</v-btn>
+<div>
+<v-container>
+<h3>Students and Recently added questions</h3>
+  <v-card v-for="questn in questions" v-bind:key="questn"
+    class="mx-auto"
+    max-width="auto"
+    flat
+    outlined
+  >
   
-          <v-alert
-      v-model="alert"
-      color="#212121"
-      dark
-      dismissible
-      border="top"
-      icon="mdi-dots-horizontal"
-      transition="scale-transition"   >
+    <v-card-text>
+      <div>
+          <v-responsive class="pt-4 pl-5 ">
+          <v-avatar size="30" >
+          <v-img :src="require('../assets/avatar_1.png')" /> 
 
-     {{note.content}}
-    </v-alert>
-          </div>
-          
-          </v-overlay>
-        </v-fade-transition>
+         </v-avatar>
+          </v-responsive>
+      </div>
+      
+      <p> {{questn.firstname + " " + questn.lastname}} </p>
+      <div class="text--primary">
+        {{questn.question}}
+      </div>
+    </v-card-text>
+    <v-card-actions>
+      <v-btn
+      outlined
+        text
+        color="primary"
+        @click="reveal = true"
+      >
+        Delete
+      </v-btn>
+      <v-btn
+        text
+        outlined
+        color="primary"
+        @click="reveal = true"
+      >
+        Ban Account
+      </v-btn>
+    </v-card-actions>
+
+    <v-expand-transition>
+      <v-card
+        v-if="reveal"
+        class="transition-fast-in-fast-out v-card--reveal"
+        style="height: 100%;"
+      >
+        <v-card-text class="pb-0">
+          <p class="text-h4 text--primary">
+            Origin
+          </p>
+          <p>late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’, from Greek eleēmosunē ‘compassion’ </p>
+        </v-card-text>
+        <v-card-actions class="pt-0">
+          <v-btn
+            text
+            color="teal accent-4"
+            @click="reveal = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
       </v-card>
-    </template>
-  </v-hover>
-</v-col>
-</v-row>
- </v-container>
-
-  </template>
-   </v-container>
+    </v-expand-transition>
+  </v-card>
+  </v-container>
+    <forumAdmin/>
+  </div>
 </template>
 
 <script>
+import forumAdmin from '@/components/ForumAdmin/forumAdmin.vue'
 export default {
-   
-data() { 
-  return{
-      overlay: false,
-      alert: false,
-       name:'tester',
-        notice: [
-          {
-          name: "charity club",
-          description: " Travel to the best outdoor experience on planet Earth. A vacation you will never forget!", 
-          content: " sthwhere the qclubs are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora.",
-          image: require("../assets/notice1.jpg")
-          },
+    components:{
+        forumAdmin
+    }, 
+    data: ()=>{
+        return{
+        questions:[
+            {
+                firstname: "Sifen", lastname: "Sifen", 
+                question: "How to eat without chewing ?"
+            },
+            {
+                firstname: "Sifen", lastname: "Sifen", 
+                question: "How to eat eat without chewing ?"
+            },
+            {
+                firstname: "Sifen", lastname: "Sifen", 
+                question: "How to eat without chewing ?"
+            }
+        ], 
 
-          {
-            name: "aastu sth",
-            description: "hello there",
-            content: "lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth lorem ipsum sth ",
-            image: require('../assets/notice1.jpg')
-         },
-         { 
-            name: " AASTU Free Tutor",
-            description: "Travel to the best outdoor experience on planet Earth. A vacation you will never forget! ",
-            content: " Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. ",
-            image: require("../assets/notice2.jpg")
-         },
-           { 
-            name: " AASTU Free Tutor",
-            description: "Travel to the best outdoor experience on planet Earth. A vacation you will never forget! ",
-            content: " Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. ",
-            image: require("../assets/notice2.jpg")
-         },
-            ],    
-
-  }
-   
-}
- 
+      
+        }
+    }
 }
 </script>

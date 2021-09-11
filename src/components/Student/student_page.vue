@@ -1,5 +1,4 @@
 <template>
-<!-- try to make the navigation drawer from the app.vue disappear!! -->
 
  <v-app id="inspire">
     <v-navigation-drawer 
@@ -15,32 +14,24 @@
 
       <v-divider></v-divider>
 
-        <v-card v-for="person in Personal_info" :key="person.name" flat >
+        <v-card v-for="person in Personal_info" :key="person" flat >
           <v-responsive class="pt-4 pl-5 ">
           <v-avatar size="60" >
-          <v-img :src="require('../../assets/avatar_1.png')" /> 
-  <!--
-    <img :src="person.avatar">
-    <v-img :src='person.avatar'/>
-             
-             <v-img :src="require(person.avatar)" />
-        --> 
+          <v-img :src="person.avatar" /> 
          </v-avatar>
           </v-responsive>
          
           <v-col>
-          <div class="text-h6" >{{ person.name }}</div>
-          <div class="grey--text" >{{ person.id }}</div>
+          <div class="text-h6" >{{ person.name + " " + person.lastname }}</div>
           <div class="grey--text" >{{ person.department }}</div>
        
           </v-col>
        </v-card>
         <v-divider></v-divider>
 
-      <v-list
+    <v-list
         dense
         nav>
-
         <v-list-item
           v-for="item in items"
           :key="item.title"
@@ -48,14 +39,14 @@
           link>
 
           <v-list-item-icon>
-            <v-icon color="primary">{{ item.icon }}</v-icon>
+            <v-icon >{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </v-list>
+    </v-list>
 
 <v-list-group
           :value="true"
@@ -75,7 +66,7 @@
   link
 >
 <v-list-item-title> {{todo.title}} </v-list-item-title>
-<v-list-item-icon> <v-icon color="primary">{{todo.icon}}</v-icon> </v-list-item-icon>
+<v-list-item-icon> <v-icon >{{todo.icon}}</v-icon> </v-list-item-icon>
 </v-list-item>
 
         </v-list-group>
@@ -112,8 +103,6 @@
   
 </template>
 
-
-
 <script>
 
 export default {
@@ -127,9 +116,8 @@ export default {
     drawer: null,
     items: [
           { title: 'Home', icon: 'mdi-home', to:'/' },
-          { title: 'Clubs', icon: 'mdi-account-group-outline', to:'' },
-          { title: 'Forum', icon: 'mdi-forum-outline' , to:'' },
-          //{ title: 'My Menu', icon: 'mdi-menu', to:'/student' },
+          { title: 'Clubs', icon: 'mdi-account-group-outline', to:'/clubs' },
+          { title: 'Forum', icon: 'mdi-forum-outline' , to:'/forum' },
         ],
 
         links: [
@@ -139,11 +127,11 @@ export default {
         access: [
           {title: 'My Materials' ,icon: 'mdi-note multiple', to: '/material'},
           {title: 'My Questions' ,icon: 'mdi-frequently-asked-questions', to: '/question'},
-          {title: 'My Clubs' ,icon: 'mdi-account-group', to: ''},
+          {title: 'My Clubs' ,icon: 'mdi-account-group', to: '/myclubs'},
              ],
 
       Personal_info: [
-          {name:'someone', id:'ETS 1010/10', department: 'SWE', avatar: '../../assets/avatar_2.png'}
+          {name:'someone', lastname:'somebody', department: 'SWE', avatar: require('../../assets/avatar_2.png'),}
             ],
   }),
 };

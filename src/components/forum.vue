@@ -39,20 +39,20 @@
 
 
 <v-container >
-<v-flex>
+<v-flex xs12>
 <v-row>
 <v-col cols="">
-<v-card flat class="pa-5 my-3"  width="800" color="grey lighten-4" v-for="question in questions" :key="question.id">
+<v-card flat class="pa-5 my-3 d-flex flex-wrap-reverse"   width="800" color="grey lighten-4" v-for="question in questions" :key="question.id" >
     <v-layout row wrap :class="` pa-3 question ${question.id}`">
-      <v-flex >
+      <v-flex xs12 >
       <v-avatar >
           <v-img :src= question.avatar /> 
-         <!--    <v-img :src="require(person.avatar)" />    -->
       </v-avatar>
+
        <div class="caption black--text">{{question.username}}</div>
         <div> {{question.content}} </div>
 
-        <v-card-actions class="pa-4 " flat>
+        <v-card-actions class="py-5  " flat>
 
         <v-btn class=" pa-3 mx-1" 
         color="blue lighten-4"  
@@ -88,7 +88,7 @@
 
 </v-card>
 </v-col>
-<v-col>
+<v-col  v-if="$vuetify.breakpoint.mdAndUp">
 <v-card flat class="pa-5 my-3" color="grey lighten-4"  left>
 <span>
 you can post any question in diffrent categories. 
@@ -114,14 +114,16 @@ you can post any question in diffrent categories.
 </v-flex>
 </v-container>
 
-
+<page-header/>
 
 </v-flex>
 </template>
 
 <script>
+import pageHeader from './pageHeader.vue'
 
 export default {
+  components: { pageHeader },
     data: () => ({
         
         question: '' ,

@@ -30,6 +30,13 @@
   <v-card-text>
 
    <v-form class="px-3" >
+        <v-text-field  label="Enter the category of your question"
+            clearable>
+
+        </v-text-field>
+        <v-text-field  label="Title of your question"
+            clearable>
+        </v-text-field>
         <v-textarea
             v-model="question" 
             label="Enter your question"
@@ -50,11 +57,11 @@
 <v-container>
 <v-card flat class="pa-5 my-3" color="grey lighten-4" v-for="question in questions" :key="question.id">
     <v-layout row wrap :class="` pa-3 question ${question.id}`">
-      <v-flex >
+      <v-flex xs12>
       <v-avatar >
           <v-img :src=question.avatar /> 
-         <!--    <v-img :src="require(person.avatar)" />    -->
       </v-avatar>
+      
        <div class="caption black--text">{{question.username}}</div>
         <div> {{question.content}} </div>
 
@@ -64,7 +71,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn class=" pa-3 mx-1" 
         color="blue lighten-4"  
-        @click="view"
+        @click="view()"
           v-bind="attrs"
           v-on="on"
         > <v-icon >mdi-eye</v-icon></v-btn>
@@ -75,7 +82,7 @@
         <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn class="success pa-3 mx-1"
-         @click="edit" 
+         @click="edit()" 
           v-bind="attrs"
           v-on="on"><v-icon >mdi-pencil</v-icon></v-btn>
      </template>
@@ -86,7 +93,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn class="pa-3 mx-1" 
         color="red lighten-1" 
-        @click="erase" 
+        @click="erase()" 
           v-bind="attrs"
           v-on="on"><v-icon >mdi-delete</v-icon></v-btn>
         </template>
@@ -101,9 +108,6 @@
 </v-card>
 
 </v-container>
-
-
-
 
 <student_page/>
 

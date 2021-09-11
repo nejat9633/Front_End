@@ -1,5 +1,5 @@
 <template>
-
+<div>
  <v-card
     elevation="16"
     class="mx-auto my-12"
@@ -100,13 +100,21 @@
         </v-row>
       </v-col>
     </v-row>
+   
   </v-card>
+
+  <page-header/>
+</div>
+
 </template>
 
 <script>
+import PageHeader from './pageHeader.vue'
+
 
 export default 
 {
+  components: {  PageHeader },
 
     data: () => ({
         first_name: '',

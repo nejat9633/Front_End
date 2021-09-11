@@ -17,8 +17,8 @@
     >
       <template v-slot:header>
         <v-toolbar
-          dark
-          color="blue-grey lighten-1"
+          
+      light
           class="mb-1"
         >
           <v-text-field
@@ -28,10 +28,12 @@
             solo-inverted
             hide-details
             prepend-inner-icon="mdi-magnify"
-            label="Search"
+            label="Search A Club"
           ></v-text-field>
 
-          <template v-if="$vuetify.breakpoint.mdAndUp">
+        <!--      color="blue-grey lighten-1"
+        
+        <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-spacer></v-spacer>
             <v-select
               v-model="sortBy"
@@ -42,32 +44,49 @@
               prepend-inner-icon="mdi-magnify"
               label="Sort by"
             ></v-select>
+           -->
             <v-spacer></v-spacer>
-            <v-btn-toggle
+             <v-btn-toggle
               v-model="sortDesc"
               mandatory
             >
-
-              <v-btn
-                large
+            
+ <v-tooltip bottom>
+         <template v-slot:activator="{ on, attrs }">
+           <v-btn 
+             v-bind="attrs"
+             v-on="on"
+              large
                 depressed
                 color="blue-grey lighten-2"
                 :value="false"
-              >
-                <v-icon>mdi-arrow-up</v-icon>
-               
-              </v-btn>
-             
-              <v-btn
-                large
+             >
+          <v-icon color="primary">mdi-arrow-up </v-icon>
+           </v-btn>
+         </template>
+        <span> Sort in Ascending (A to Z) Order </span>
+         </v-tooltip>
+
+
+            <v-tooltip bottom>
+         <template v-slot:activator="{ on, attrs }">
+           <v-btn 
+             v-bind="attrs"
+             v-on="on"
+              large
                 depressed
                 color="blue-grey lighten-2"
                 :value="true"
-              >
-                <v-icon>mdi-arrow-down</v-icon>
-              </v-btn>
+             >
+          <v-icon color="primary">mdi-arrow-down </v-icon>
+           </v-btn>
+         </template>
+        <span> Sort in Descending (Z to A) Order </span>
+         </v-tooltip>
+
+          
             </v-btn-toggle>
-          </template>
+         
         </v-toolbar>
       </template>
 
@@ -85,7 +104,7 @@
           <v-hover>
     <template v-slot:default="{ hover }"  >
       <v-card
-        class="mx-auto"
+        class="mx-auto ma-3"
         max-width="300"
        min-height="300" 
       
@@ -101,7 +120,7 @@
            {{item.name}}
           </h2>
 
-          {{item.descriiption}}  </v-card-text>
+          {{item.description}}  </v-card-text>
 
         <v-fade-transition>
           <v-overlay
@@ -123,7 +142,7 @@
       icon="mdi-dots-horizontal"
       transition="scale-transition"   >
 
-     {{note.content}}
+     {{item.content}}
     </v-alert>
           </div>
           

@@ -1,5 +1,6 @@
 <template>
   <v-container >
+  <v-flex xs12>
     <v-row class="flex-row mt-2" justify="center">
       <v-col cols="3">
         <v-card class="pa-4" color="lightgrey" tile>
@@ -92,6 +93,7 @@
         </v-row >
               </v-col>
     </v-row>
+  </v-flex>
   </v-container>
 </template>
 <script>

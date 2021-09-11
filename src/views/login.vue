@@ -1,8 +1,9 @@
 <template>
 <v-flex>
+
   <v-container class="mx-lg my-12" >
     <v-row class="mx-16">
-      <v-col class="mx-15">
+      <v-col class="mx-0">
         <v-row class="mx-9" justify="center">
           <v-col class="mx-15">
             <v-form
@@ -97,10 +98,19 @@
     </v-row>
  
   </v-container>
+   <page-header/>
    </v-flex>
 </template>
+
 <script>
+
+
+import PageHeader from '../components/pageHeader.vue'
+
 export default {
+
+  components: { PageHeader },
+
   name: "login",
   data() {
     return {
