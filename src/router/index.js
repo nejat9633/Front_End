@@ -16,6 +16,10 @@ import forumAdmin from '../components/ForumAdmin/forumAdmin.vue'
 import report from '../components/ForumAdmin/report.vue'
 import banned from '../components/ForumAdmin/banned.vue'
 import clubPres from '../components/Club President/clubPres.vue'
+import cpres from '../components/Club President/cpres.vue'
+import events from '../components/Club President/events.vue'
+import applicants from '../components/Club President/applicants.vue'
+import clubDetail from '../components/Club President/clubDetail.vue'
 
 
 Vue.use(VueRouter)
@@ -96,6 +100,26 @@ const routes = [
   path: '/clubPres',
   name: 'clubPres',
   component: clubPres
+},
+{
+  path: '/cpres',
+  name: 'cpres',
+  component: cpres
+},
+{
+  path: '/applicants',
+  name: 'applicants',
+  component: applicants
+},
+{
+  path: '/events',
+  name: 'events',
+  component: events
+},
+{
+  path: '/clubDetail',
+  name: 'clubDetail',
+  component: clubDetail
 },
 {
   path: '/super',

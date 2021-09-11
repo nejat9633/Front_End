@@ -57,7 +57,7 @@
 <v-container>
 <v-card flat class="pa-5 my-3" color="grey lighten-4" v-for="question in questions" :key="question.id">
     <v-layout row wrap :class="` pa-3 question ${question.id}`">
-      <v-flex xs12>
+      <v-flex >
       <v-avatar >
           <v-img :src=question.avatar /> 
       </v-avatar>

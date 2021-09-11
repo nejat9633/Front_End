@@ -18,6 +18,23 @@
 
       <v-divider></v-divider>
 
+
+        <v-card v-for="person in Personal_info" :key="person" flat >
+          <v-responsive class="pt-4 pl-5 ">
+          <v-avatar size="60" >
+          <v-img :src="person.avatar" /> 
+         </v-avatar>
+          </v-responsive>
+         
+          <v-col>
+          <div class="text-h6" >{{ person.name + " " + person.lastname }}</div>
+      
+       
+          </v-col>
+       </v-card>
+         <v-divider></v-divider>
+
+
       <v-list
         dense
         nav
@@ -37,6 +54,8 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+
+      
       <template v-slot:append>
         <div class="pa-2" >
           <v-btn block dark>
@@ -88,12 +107,16 @@ name: 'clubPres',
   data: () => ({
     drawer: true,
     items: [
-          { title: 'Home', icon: 'mdi-home', to:'/forumAdmin' },
-         { title: 'Clubs', icon: 'mdi-account-group-outline', to:'/clubs' },
-         // { title: 'Forum', icon: 'mdi-forum-outline' , to:'/forum' },
-         { title: 'Applicants', icon: 'mdi-account', to:'' },
+          { title: 'Home', icon: 'mdi-home', to:'/cpres' },
+          { title: 'Clubs', icon: 'mdi-account-group-outline', to:'clubDetail' }, 
+          { title: 'Events', icon: 'mdi-calendar-multiple' , to:'/events' },
+          { title: 'Applicants', icon: 'mdi-account', to:'/applicants' },
         ],
         
+ Personal_info: [
+          {name:'someone', lastname:'father', avatar: require('@/assets/avatar_2.png'),}
+            ],
+
   }),
 
 })

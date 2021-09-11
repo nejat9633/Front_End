@@ -11,7 +11,5 @@ export default ({
    components: {
        forumAdmin
    }
-
-
 })
 </script>
