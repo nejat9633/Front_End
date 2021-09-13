@@ -24,7 +24,7 @@
     <v-card-title> 
         <h2>Add a New Question</h2>
     </v-card-title>
-
+   <h3 class="text--green">{{message_for_new}}</h3>
 <v-divider></v-divider>
 
   <v-card-text>
@@ -73,7 +73,6 @@
   </v-card-text>  
 
 </v-card>
-
 </v-dialog>
 </v-container>
 <v-container v-if="status">
@@ -93,7 +92,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn class=" pa-3 mx-1" 
         color="blue lighten-4"  
-        @click="view"
+        @click="view(question._id)"
           v-bind="attrs"
           v-on="on"
         > <v-icon class="fa fa-eye">mdi-eye</v-icon></v-btn>
@@ -104,7 +103,7 @@
         <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn class="fa fa-pencil success pa-3 mx-1"
-         @click="edit()" 
+         @click="edit(question._id)" 
           v-bind="attrs"
           v-on="on"><v-icon class="fa fa-pencil-alt" >mdi-pencil</v-icon></v-btn>
      </template>
@@ -115,20 +114,25 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn class=" pa-3 mx-1" 
         color="red lighten-1" 
-        @click="erase" 
+        @click="erase(question._id)" 
           v-bind="attrs"
           v-on="on"><v-icon class="fa fa-trash-alt">mdi-delete</v-icon></v-btn>
         </template>
       <span>Delete Question</span>
       </v-tooltip>
-
+       
         </v-card-actions>
 
       </v-flex>
     </v-layout>
 
 </v-card>
-
+        <v-card >
+           <div v-for="answer in answers" :key="answer">
+             <p>{{answer.description}}</p>
+           </div>
+           <div>{{message_for_new}}</div>
+        </v-card>
 </v-container>
 <v-container v-if="!status">
    <v-flex>
@@ -137,10 +141,6 @@
      </div>
    </v-flex>
 </v-container>
-
-
-
-
 <student_page/>
 
 </div>
@@ -162,6 +162,7 @@ export default {
         question: '' ,
         dialog: false,
         alert:false,
+        answers:'',
          message_for_new: '',
          message: '',
          description:'',
@@ -169,24 +170,15 @@ export default {
          title: '',
          status: true, 
          questionss:'',
-         titles:['programming', 'Graphics', 'Math', 'vocabulary','Physics', 'General IT' ],
-        questions: [
-          {
-           id: "1", username: "someone", content: " sthwhere the questions are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora."
-          },
-           {
-           id: "2", username: "someone",avatar: '../../assets/avatar_2.png', content: " 2 question sthwhere the questions are Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora."
-          },
-        ],    
+         titles:['programming', 'Graphics', 'Math', 'vocabulary','Physics', 'General IT' ]    
        }
     },
       components:
    {
       student_page
    },
-   mounted(){
-        console.log(this.question)
-        axios.get(`${url}myQuestions/${userId}`, 
+   beforeMount(){
+     axios.get(`${url}myQuestions/${userId}`, 
                   { headers: {'Authorization': `Bearer ${token}`}})
              .then((res) => {
                
@@ -204,25 +196,45 @@ export default {
                this.message = "An error has been occured from server."
              })
    },
+   mounted(){
+        axios.get(`${url}myQuestions/${userId}`, 
+                  { headers: {'Authorization': `Bearer ${token}`}})
+             .then((res) => {
+                 if(res.data.status == 'failure'){
+                   this.message = res.data.message
+                   this.status = false
+                 }
+                 else{
+                     this.questionss = res.data.questions
+                     this.status= true
+                     console.log("true" + res.data)
+                 }
+             })
+             .catch((err)=>{
+               this.message = "An error has been occured from server."
+             })
+   },
 methods: {
 
-    submit()
+    submit(QId)
     {
       let data ={
         title: this.title,
         description: this.description,
         catagory: this.catagory
       }
+      this.status = true;
       return axios.post(`${url}postQuestion/${userId}`, data,
                   {headers: {'Authorization': `Bearer ${token}`}}
                   )
                   .then((res) => {
+                    this.questionss.push(res.data.createdQ)
+                    this.message_for_new = "Question Added successfuly"
                     if(res.data.status == 'success'){
                       this.$store.dispatch('Qdata', res.data.result)
                                 .then((res)=>{
-                                  this.questionss.push(res.data.result)
+
                                   this.alert = true
-                                  this.message_for_new = "Question Added successfuly"
                                 })
                                 .catch((err)=>{
                                   this.message_for_new = "Server Error"
@@ -236,16 +248,34 @@ methods: {
      
     },
 
-    view()
+    view(QId)
     {
-
+      axios.get(`${url}getallAnswers/${QId}`)
+          .then((res)=>{
+            if(res.data.status == 'success'){
+            this.answers = res.data.reason
+            }
+            else{
+            this.message_for_new = res.data.message
+            }
+      })
     },
 
-    erase()
+    erase(qID)
     {
-     
+     return axios.delete(`${url}removeQuestion/${qID}`, {headers: {
+        'Authorization': `Bearer ${token}`
+    }}).then((res)=>{
+      this.answers = this.answers.filter((value, index, arr)=>{
+           return value._id != res.data.result._id
+      })
+      this.message_for_new = 'Question Deleted successfuly successfuly'
+      vm.$forceUpdate();
+     // this.$router.push('/')
+    }).catch((err)=>{
+      this.message_for_new = "Error Occured"
+    })
     },
-
     edit( )
     {
       let data = {

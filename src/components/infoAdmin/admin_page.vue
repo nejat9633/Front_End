@@ -29,9 +29,9 @@
           </v-responsive>
          
           <v-col>
-          <div class="text-h6" >{{ person.name }}</div>
-          <div class="grey--text" >{{ person.id }}</div>
-          <div class="grey--text" >{{ person.department }}</div>
+          <div class="text-h6" >{{ Personal_info.firstname }}</div>
+          <div class="grey--text" >{{ Personal_info.lastname }}</div>
+          <div class="grey--text" >{{ Personal_info.email }}</div>
        
           </v-col>
        </v-card>
@@ -108,21 +108,36 @@
             />
       <v-toolbar-title> AASTU STUDENT'S CENTER</v-toolbar-title>
     </v-app-bar> 
+      <events/>
   </v-app>
-  
+
 </template>
 
 
 
 <script>
-
+import events from './events.vuev'
 export default {
   name: 'App',
 
  components: {
-    
+    events
   },
-  
+  mounted(){
+  axios.get(`${url}/findUser/${userId}`).then((res)=>{
+           if(res.data.status == 'failure'){
+                   this.message = res.data.message
+
+                   this.status = false
+                 }
+                 else{
+                     this.Personal_info = res.data.user
+                     this.response = res.data
+                     this.status= true
+                     console.log("true" + res.data)
+                 }
+        })
+  },
   data: () => ({
     drawer: null,
     items: [

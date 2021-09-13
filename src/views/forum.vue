@@ -41,9 +41,7 @@
       color="deep-blue accent-4"
       elevation="2"
     >
-      Aliquam eu nunc. Fusce commodo aliquam arcu. In consectetuer turpis ut velit. Nulla facilisi..
-
-      Morbi mollis tellus ac sapien. Fusce vel dui. Praesent ut ligula non mi varius sagittis. Vivamus consectetuer hendrerit lacus. Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi.
+    <h3>{{message_for_new}}</h3>
     </v-alert>
       <v-card
         v-for="questn in questions"
@@ -71,7 +69,7 @@
           <v-btn text color="teal accent-4" @click="like(questn._id)">
             <span class="mx-2">{{ questn.rate }}</span> Like
           </v-btn>
-          <v-dialog v-model="dialog" max-width="600px">
+          <v-dialog v-model="dialog"  max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 class=" mx-10  pa-5"

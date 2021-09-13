@@ -117,10 +117,9 @@
                 <v-spacer></v-spacer>
                 <v-btn flat class="mx-2"><v-icon class="fa fa-envelope"></v-icon></v-btn>
                 <v-btn class="mx-2"><v-icon class="fa fa-user-slash"></v-icon></v-btn>
-                </div>
-
-        </v-row >
-              </v-col>
+              </div>
+        </v-row>
+      </v-col>
     </v-row>
     {{response}}
   </v-container>

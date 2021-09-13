@@ -24,18 +24,15 @@
         class="ma-1"
       ></v-text-field>
     </v-bottom-navigation>
-    <v-alert
-      v-if="message"
+    <v-alert 
+      v-if="msgforum"
       border="left"
+      background-color="grey"
       colored-border
-      color="deep-red accent-4"
+      color="red "
       elevation="2"
     >
-      Aliquam eu nunc. Fusce commodo aliquam arcu. In consectetuer turpis ut
-      velit. Nulla facilisi.. Morbi mollis tellus ac sapien. Fusce vel dui.
-      Praesent ut ligula non mi varius sagittis. Vivamus consectetuer hendrerit
-      lacus. Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec,
-      nisi.
+<h3>{{msgforum}}</h3>
     </v-alert>
     <div class="pa-3 headline text-h5 dark">
       <span>Highly Rated Questions</span>
@@ -55,11 +52,10 @@
               <v-flex>
                 <v-avatar>
                   <v-img :src="require('../assets/avatar_1.png')" />
-                  <!--    <v-img :src="require(person.avatar)" />    -->
                 </v-avatar>
                 <div class="caption black--text">{{ question.title }}</div>
                 <div>{{ question.description }}</div>
-
+              
                 <v-card-actions class="pa-4 " flat>
                       <v-btn
                         class=" pa-3 mx-1"
@@ -121,7 +117,7 @@
                             class=" px-2 mx-4 mt-3"
                             @click="report(question._id)"
                           >
-                            Add Answer
+                            submit
                           </v-btn>
                           <v-btn
                             flat
@@ -159,7 +155,6 @@
           </v-card>
         </v-col>
       </v-row>
-      {{answer}}
     </v-container>
   </v-flex>
 </template>
@@ -176,12 +171,27 @@ export default {
       console.log(qID);
         localStorage.setItem('qID', qID);
         console.log('clicked')
-        setTimeout(()=>{
         this.$router.push('/question&answer')
-
-        }, 4000)
       },
     Like(qID) {
+      if (localStorage.getItem("tok") == null  ) {
+        this.msgforum = "You need to login first.";
+        setTimeout(() => this.$router.push("/login"), 4000);
+      }
+     else if(localStorage.getItem('role') != 'student'){
+        this.msgforum = "Sorry, You are not authorized for this Action.";
+        setTimeout(() => this.$router.push("/forum"), 4000); 
+      }
+
+     else if(!userId){
+        this.msgforum = 'Please, You need to login first to post answer, like and report.'
+        setTimeout(()=>{
+        this.$router.push('/forum')
+
+        }, 4000)
+        
+      }
+      else{
       axios
         .post(`${url}rateQuestion/${qID}`, {
           headers: { 'Auhorization': `Bearer ${token}` },
@@ -189,8 +199,11 @@ export default {
         .then((res) => {
           if (res.data.status == "success") {
             this.message = res.data.message;
+            this.rate = res.data.rate
+            this.$forceUpdate()
           } else this.message = res.data.message;
         });
+      }
     },
     getAnswers(qID) {
       axios
@@ -226,7 +239,9 @@ export default {
     return {
       message: "",
       answerMessage: "",
+      rate:null,
       dialog: false,
+      msgforum:'',
       dialog2: false,
       description: "",
       response: "",

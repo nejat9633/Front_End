@@ -15,7 +15,7 @@
 
       <v-divider></v-divider>
 
-        <v-card v-for="person in Personal_info" :key="person.name" flat >
+        <v-card  flat >
           <v-responsive class="pt-4 pl-5 ">
           <v-avatar size="60" >
           <v-img :src="require('../../assets/avatar_1.png')" /> 
@@ -29,9 +29,9 @@
           </v-responsive>
          
           <v-col>
-          <div class="text-h6" >{{ person.name }}</div>
-          <div class="grey--text" >{{ person.id }}</div>
-          <div class="grey--text" >{{ person.department }}</div>
+          <div class="text-h6" >{{ Personal_info.firstname }}</div>
+          <div class="grey--text" >{{ Personal_info.lastname }}</div>
+          <div class="grey--text" >{{ Personal_info.email }}</div>
        
           </v-col>
        </v-card>
@@ -115,12 +115,30 @@
 
 
 <script>
-
+import axios from 'axios'
+const url = 'http://localhost:8888/api/'
+const userId = localStorage.getItem('user');
+const token = localStorage.getItem('tok');
 export default {
   name: 'App',
 
  components: {
     
+  },
+  mounted(){
+  axios.get(`${url}/findUser/${userId}`).then((res)=>{
+           if(res.data.status == 'failure'){
+                   this.message = res.data.message
+
+                   this.status = false
+                 }
+                 else{
+                     this.Personal_info = res.data.user
+                     this.response = res.data
+                     this.status= true
+                     console.log("true" + res.data.user)
+                 }
+        })
   },
   
   data: () => ({
@@ -128,7 +146,7 @@ export default {
     items: [
           { title: 'Home', icon: 'mdi-home', to:'/' },
           { title: 'Clubs', icon: 'mdi-account-group-outline', to:'' },
-          { title: 'Forum', icon: 'mdi-forum-outline' , to:'' },
+          { title: 'Forum', icon: 'mdi-forum-outline' , to:'/forum' },
           //{ title: 'My Menu', icon: 'mdi-menu', to:'/student' },
         ],
 
@@ -144,9 +162,7 @@ export default {
 
              ],
 
-      Personal_info: [
-          {name:'someone', id:'email@gmail.com', department: 'SWE', avatar: '../../assets/avatar_2.png'}
-            ],
+      Personal_info: [],
   }),
 };
 </script>

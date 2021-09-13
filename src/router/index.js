@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '../views/login.vue'
-import superadmin from '../components/superadmin.vue'
+import superadmin from '../components/superAdmin/superadmin2.vue'
+import admins from '../components/superAdmin/admins.vue'
+
 import Home from '../components/Home.vue'
 import vue from '../components/HelloWorld.vue'
 import signup from '../components/signup.vue'
@@ -9,6 +11,8 @@ import student_page from '../components/Student/student_page.vue'
 import material from '../components/Student/material.vue'
 import aastuhome from '../components/aastuhome.vue'
 import MyQuestion from '../components/Student/my_question.vue'
+import MyClubs from '../components/Student/myClubs.vue'
+
 //import infoAdmin from '../views/infoAdmin.vue'
 import forumAdmin from '../components/forumAdmin/admin_page.vue'
 import adminSignup from '../components/adminSignup.vue'
@@ -23,7 +27,8 @@ import forum from '../components/forum.vue'
 import questionanswer from '../components/forumQ&A.vue'
 import forgotPassword from '../views/forgotPassword.vue'
 //import student from '../views/student.vue'
-import clubPresident from '../components/clubPresident/pres_Page.vue'
+import clubPresident from '../components/clubPresident/clubPres.vue'
+import club from '../components/club_home'
 
 
 Vue.use(VueRouter)
@@ -33,6 +38,11 @@ const routes = [
     path: '/vue',
     name: 'vue',
     component: vue
+  },
+  {
+    path: '/clubs',
+    name: 'club',
+    component: club
   },
   {
     path: '/',
@@ -76,6 +86,12 @@ const routes = [
   name: 'my_question',
   component: MyQuestion
 },
+
+{
+  path: '/myClubs',
+  name: 'my_clubs',
+  component: MyClubs
+},
 {
   path: '/aastuhome',
   name: 'aastuhome',
@@ -87,7 +103,11 @@ const routes = [
   name: 'super',
   component: superadmin
 },
-
+{
+  path: '/admins',
+  name: 'admins',
+  component: admins
+},
 {
   path: '/infoAdmin',
   name: 'infoAdmin',

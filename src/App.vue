@@ -61,10 +61,11 @@
             />
       <v-toolbar-title class="text-uppercase"> AASTU Student's Center </v-toolbar-title>
       <v-spacer></v-spacer>
+        <v-btn v-if="login" @click="login()" outlined> Login</v-btn>
     </v-app-bar>
 
     <v-main>
-        <router-view> </router-view>
+        <router-view :key="$router.fullPath"> </router-view>
     </v-main>
 
  <v-spacer></v-spacer>
@@ -97,14 +98,27 @@ export default {
  components: {
     
   },
-  
+  methods:{
+    login(){
+      this.$router.push('/login')
+    }
+  },
+  beforeMount(){
+    if(localStorage.getItem('tok') != null ){
+      this.login == false
+    }
+    else {
+      this.login = true
+    }
+  },
   data: () => ({
     drawer: false,
+    login: false,
     items: [
           { title: 'Home', icon: 'mdi-home', to:'/' },
           { title: 'Clubs', icon: 'mdi-account-group-outline', to:'' },
           { title: 'Forum', icon: 'mdi-forum-outline' , to:'/forum' },
-          { title: 'Login', icon: 'mdi-login-variant', to:'/login' },
+          //{ title: 'Login', icon: 'mdi-login-variant', to:'/login' },
         ],
         links: [
           {text: 'About Us', to: '/about'}

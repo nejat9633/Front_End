@@ -14,9 +14,7 @@
       </v-list-item>
 
       <v-divider></v-divider>
-
-        <v-card v-for="person in Personal_info" :key="person.name" flat >
-          <v-responsive class="pt-4 pl-5 ">
+  <v-responsive class="pt-4 pl-5 ">
           <v-avatar size="60" >
           <v-img :src="require('../../assets/avatar_1.png')" /> 
   <!--
@@ -27,11 +25,13 @@
         --> 
          </v-avatar>
           </v-responsive>
+        <v-card  flat >
+        
          
           <v-col>
-          <div class="text-h6" >{{ person.name }}</div>
-          <div class="grey--text" >{{ person.id }}</div>
-          <div class="grey--text" >{{ person.department }}</div>
+          <div class="text-h6" >{{ Personal_info.firstname }}</div>
+          <div class="grey--text" >{{ Personal_info.lastname }}</div>
+          <div class="grey--text" >{{ Personal_info.email }}</div>
        
           </v-col>
        </v-card>
@@ -56,7 +56,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-
 <v-list-group
           :value="true"
           no-action
@@ -72,6 +71,7 @@
   v-for="todo in access" 
   :key="todo.title"
   :to="todo.to"
+  @click="todo.clicked = true"
   link
 >
 <v-list-item-title> {{todo.title}} </v-list-item-title>
@@ -82,7 +82,7 @@
   
       <template v-slot:append>
         <div class="pa-2" >
-          <v-btn block dark>
+          <v-btn block dark @click="logout()">
             Logout
           </v-btn>
         </div>
@@ -108,27 +108,28 @@
             />
       <v-toolbar-title> AASTU STUDENT'S CENTER</v-toolbar-title>
     </v-app-bar> 
+
   </v-app>
   
 </template>
-
-
-
 <script>
-
+import admins from './admins.vue'
 export default {
   name: 'App',
 
  components: {
-    
+    admins
   },
   
   data: () => ({
     drawer: null,
+    ad: false,
+    st:false,
+    re:false,
     items: [
           { title: 'Home', icon: 'mdi-home', to:'/' },
-          { title: 'Clubs', icon: 'mdi-account-group-outline', to:'' },
-          { title: 'Forum', icon: 'mdi-forum-outline' , to:'' },
+          { title: 'Clubs', icon: 'mdi-account-group-outline', to:'/clubs' },
+          { title: 'Forum', icon: 'mdi-forum-outline' , to:'/forum' },
           //{ title: 'My Menu', icon: 'mdi-menu', to:'/student' },
         ],
 
@@ -137,16 +138,27 @@ export default {
         ],
 
         access: [
-          {title: 'Dsshboard' ,icon: 'mdi-note multiple', to: '/super-dashboard'},
+          {title: 'Dashboard' ,icon: 'mdi-note multiple', to: '/super-dashboard'},
           {title: 'Student' ,icon: 'mdi-frequently-asked-questions', to: '/super-students'},
-          {title: 'Admins' ,icon: 'mdi-account-group', to: '/super-admins'},
+          {title: 'Admins' ,icon: 'mdi-account-group', to: '/admins'},
           {title: 'Feedback' ,icon: 'mdi-account-group', to: '/super-feedbacks'},
 
              ],
 
       Personal_info: [
-          {name:'someone', id:'ETS 1010/10', department: 'SWE', avatar: '../../assets/avatar_2.png'}
+          {name:'someone', id:'ETS 1010/10', department: 'SWE', avatar: '../assets/avatar_2.png'}
             ],
   }),
+  methods:{
+    check(title){
+     if(title == 'Dashboard'){
+this.da = true
+     }
+     if(title == 'Admins'){ this.ad =true}
+     if(title == 'Student'){ this.st= true}
+     if(title == 'Feedback'){ this.re = true}
+
+    }
+  }
 };
 </script>
