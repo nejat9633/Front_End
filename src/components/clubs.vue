@@ -59,7 +59,7 @@
   </v-col>
   </v-row>
   </v-col>
-  </v-card-text> 
+  
   
 <v-card-actions>
   <v-dialog max-width="600px">
@@ -67,11 +67,11 @@
 <template v-slot:activator="{ on, attrs }">
 <v-flex> 
     <v-btn
-  color="pink"
-  dark
+  color="primary"
+  
    v-bind="attrs"
    v-on="on"
-  class=""
+  
   :style="{left: '50%', transform:'translateX(-50%)'}" 
   @click="apply()" > 
         apply
@@ -98,8 +98,8 @@
         <v-textarea  
          v-model="reason" 
          label="Why do you want to join this club? "
-           clearable
-          >
+         clearable
+        >
         </v-textarea>
        
         <v-btn flat class="success mx-0 mt-3" @click="submit"> Submit Application </v-btn>
@@ -108,7 +108,7 @@
 </v-card>
 </v-dialog>
      </v-card-actions>
-
+</v-card-text> 
   </v-card>
 </v-row>
  </v-container>

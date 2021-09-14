@@ -14,23 +14,19 @@
           large   
           >
         <v-icon class="pr-3">mdi-plus-circle</v-icon>
-          New Event
+          New Event/Information
         </v-btn>
-   
       </template>
 
 <v-card>
     <v-card-title> 
-        <h2>Add a New Event</h2>
+        <h2>Add a New Event/Information</h2>
     </v-card-title>
 
 <v-divider></v-divider>
 
   <v-card-text>
-
-  
    <v-form class="px-3" >
-      
 
         <v-text-field  label="Title of the Event"
             clearable
@@ -55,7 +51,7 @@
             prepend-icon=" mdi-pencil"
         >
         </v-textarea>
-        <v-btn flat class="success mx-0 mt-3" @click="submit()"> Post Event </v-btn>
+        <v-btn flat class="success mx-0 mt-3" @click="submit()"> Post Event/Information </v-btn>
          <v-btn flat class=" mx-2 mt-3"
                 @click="dialog2 = false"
                 outlined
@@ -64,13 +60,12 @@
 
     </v-card-text>  
   </v-card>
+
 </v-dialog>
+        <div  class="pa-5   text-h5 dark" >
+        <span> Posted Events/Informations </span>
+        </div>
 
-                 <div  class="pa-5   text-h5 dark" >
-                    <span> Posted Events </span>
-                </div>
-
-     
 <v-row >
 
 <v-card v-for="(event) in events"
@@ -81,32 +76,28 @@
     max-width="auto"
     outlined
   >
+  
    <v-card-text>
-
-  <v-row>
-  <v-col cols="5">
-   <v-img 
-     :src= event.image  
-        contain
-        height="200"
+     <v-row>
+      <v-col cols="5">
+        <v-img 
+          :src= event.image  
+          contain
+          height="200"
         />
-    </v-col>
+      </v-col>
     
   <v-col cols="">
-<h2 class="black--text">{{event.name}}</h2>
- <h3 class=" black--text">
-        {{event.description}}
-        </h3>
+    <h2 class="black--text">{{event.name}}</h2>
+    <h3 class=" black--text"> {{event.description}} </h3>
 
-<v-row>
+  <v-row>
   <v-col cols="">
-  
        <div class=" black--text "><br/> {{event.content}} <br/></div>
   </v-col>
   </v-row>
   
 <v-card-actions>
-
 <v-dialog max-width="600px" v-model="dialog1">
 
 <template v-slot:activator="{ on, attrs }">
@@ -124,7 +115,7 @@
 
 <v-card>
     <v-card-title> 
-        <h2>Edit the Event</h2>
+        <h2>Edit the Event/Information</h2>
     </v-card-title>
 
 <v-divider></v-divider>
@@ -154,11 +145,11 @@
             prepend-icon=" mdi-pencil"
         >
         </v-textarea>
-        <v-btn flat class="success mx-0 mt-3" @click="submit()"> Edit Event </v-btn>
+        <v-btn flat class="success mx-0 mt-3" @click="submit()"> Edit Event/Information </v-btn>
           <v-btn flat class=" mx-2 mt-3"
                 @click="dialog1 = false"
                 outlined
-              >Close</v-btn>
+              > Close </v-btn>
      </v-form>
 
     </v-card-text>  
@@ -213,18 +204,18 @@
   </v-card>
 </v-row>
 
-    <club-pres/>
+    <infoPage/>
     </v-container>
 
 </template>
 
 
 <script>
-import clubPres from '@/components/Club President/clubPres.vue'
+import infoPage from '@/components/infoAdmin/infoPage.vue'
 
 export default ({
    components: {
-        clubPres,
+        infoPage,
     },
     data() {
         return{
@@ -235,19 +226,21 @@ export default ({
       dialog2: false,
       events:  [
             {
+              
           name: "sth title",
           description: " Travel to the best outdoor orget!", 
           content: " sthwhere the qclubs are Lorendae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora.",
           image: require("@/assets/notice1.jpg")
-            }, 
-            {  
+            }, {
+              
           name: "sth title",
           description: " Travel to the best outdoor orget!", 
           content: " sthwhere the qclubs are Lorendae odio consectetur quis necessitatibus dolores asperiores sint cum, at eum quisquam mollitia nisi aperiam autem, laborum doloribus aliquam praesentium aspernatur! Tempora.",
           image: require("@/assets/notice1.jpg")
             },
-      ] 
+        ] 
+   
    }
-  }
+        }
 })
 </script>

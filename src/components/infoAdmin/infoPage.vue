@@ -12,12 +12,12 @@
           <v-list-item-title class="text-h6" >
             AASTU Student's Center
           </v-list-item-title>
-          <v-list-item-subtitle class="text-uppercase">Club President</v-list-item-subtitle>
+          <v-list-item-subtitle class="text-uppercase"> Information Director</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
-      <v-divider></v-divider>
-
+   
+ <v-divider></v-divider>
 
         <v-card v-for="person in Personal_info" :key="person" flat >
           <v-responsive class="pt-4 pl-5 ">
@@ -32,8 +32,7 @@
        
           </v-col>
        </v-card>
-         <v-divider></v-divider>
-
+        <v-divider></v-divider>
 
       <v-list
         dense
@@ -45,8 +44,8 @@
           :to="item.to"
           link
         >
-          <v-list-item-icon>
-            <v-icon color="primary" >{{ item.icon }}</v-icon>
+          <v-list-item-icon >
+            <v-icon color="primary"  >{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -54,8 +53,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-
-      
       <template v-slot:append>
         <div class="pa-2" >
           <v-btn block dark>
@@ -69,7 +66,7 @@
       app
       dark
       height="80"
-    
+      fixed
     >
    <v-app-bar-nav-icon @click="drawer = !drawer " ></v-app-bar-nav-icon>
      <v-img
@@ -91,32 +88,28 @@
 
 </v-container>
 </v-flex>
- 
-  </v-app>
-
+</v-app>
 
 </template>
 
 <script>
 
-
 export default ({
   
-name: 'clubPres',
+name: 'infoPage',
 
   data: () => ({
     drawer: true,
     items: [
-          { title: 'Home', icon: 'mdi-home', to:'/cpres' },
-          { title: 'Members', icon: 'mdi-account-group-outline', to:'clubDetail' }, 
-          { title: 'Events', icon: 'mdi-calendar-multiple' , to:'/events' },
-          { title: 'Applicants', icon: 'mdi-account', to:'/applicants' },
+        //  { title: 'Home', icon: 'mdi-home', to:'/' },
+          { title: 'Events/Informations', icon: 'mdi-account-group-outline', to:'/infoHome' },
+          { title: 'Feedback', icon: 'mdi-forum-outline' , to:'/feedback' },
+        // { title: 'Banned Accounts', icon: 'mdi-alert-circle', to:'/' },
         ],
-        
- Personal_info: [
-          {name:'someone', lastname:'father', avatar: require('@/assets/avatar_2.png'),}
-            ],
 
+           Personal_info: [
+          {name:'someone', lastname:'double', avatar: require('@/assets/avatar_1.png'),}
+            ],
   }),
 
 })

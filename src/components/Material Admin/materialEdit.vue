@@ -1,6 +1,12 @@
 <template>
 <v-flex >
-  <v-container fluid pa-5>
+  <v-container fluid pa-5 >
+
+        <div  class="pa-2   text-h5 dark" >
+        <h2> Posted Materials </h2>
+        </div>
+
+
     <v-data-iterator
       :items="items"
       :items-per-page.sync="itemsPerPage"
@@ -9,6 +15,7 @@
       :sort-by="sortBy.toLowerCase()"
       :sort-desc="sortDesc"
       hide-default-footer
+      class="ma-3"
     >
       <template v-slot:header>
         <v-toolbar
@@ -64,37 +71,25 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:default="props">
+      <template v-slot:default="props" >
         <v-row>
-          <v-col
+          <v-col class="grey lighten-2"
             v-for="item in props.items"
             :key="item.name"
             cols="12"
             sm="6"
             md="4"
-            lg="3"
+            lg="3" 
           >
 
-
-         <v-tooltip bottom>
-         <template v-slot:activator="{ on, attrs }">
-           <v-btn class="ma-2" 
-             v-bind="attrs"
-             v-on="on"
-             href="https://www.koziel.fr/18894-pdt_540/wall-of-roses-mural.jpg"
-             download
-             >
-          <v-icon color="primary">mdi-download </v-icon>
-           </v-btn>
-         </template>
-        <span> Download Course Outline and Project Template </span>
-         </v-tooltip>
-
-
-            <v-card>
+            <v-card >
               <v-card-title class="subheading font-weight-bold">
                 {{ item.name }}
               </v-card-title>
+
+              <v-card-subtitle>
+              File Attached: {{item.file}}
+              </v-card-subtitle>
 
               <v-divider></v-divider>
 
@@ -113,11 +108,109 @@
                     :class="{ 'blue--text': sortBy === key }"
                   >
                     {{ item[key.toLowerCase()] }}
-                  </v-list-item-content>
+                  </v-list-item-content> 
                 </v-list-item>
                  
               </v-list>
+              <v-col>
               
+<v-card-actions  >
+
+<v-dialog max-width="600px" v-model="dialog1">
+
+<template v-slot:activator="{ on, attrs }" >
+
+        <v-btn
+          class=" primary mx-2"
+          v-bind="attrs"
+          v-on="on"
+          >
+          Edit 
+        </v-btn>
+      </template>
+
+<v-card>
+    <v-card-title> 
+        <h2>Edit this Material</h2>
+    </v-card-title>
+
+<v-divider></v-divider>
+
+  <v-card-text>
+   <v-form class="px-3" >
+
+        <v-text-field  label="Course title of the Material"
+            clearable
+             prepend-icon="mdi-transfer-right">
+        </v-text-field>
+
+         <v-text-field  label="Year in number"
+            clearable
+             prepend-icon="mdi-numeric">
+        </v-text-field>
+
+  <v-file-input
+    label="File Input"
+    filled
+    prepend-icon="mdi-paperclip"
+  ></v-file-input>
+
+        
+        <v-btn flat class="success mx-0 mt-3" @click="submit()"> Edit Material </v-btn>
+         <v-btn flat class="primary mx-2 mt-3"
+                @click="dialog1 = false"
+            
+              >Close</v-btn>
+     </v-form>
+
+    </v-card-text>  
+  </v-card>
+
+</v-dialog>
+
+<v-dialog
+      v-model="dialog"
+      persistent
+      max-width="290"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          class="primary ml-1"
+          v-bind="attrs"
+          v-on="on" 
+         light
+        >
+         REMOVE
+        </v-btn>
+      </template>
+      <v-card>
+        
+        <v-card-text> <br/> Are you sure you want to remove this material? </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Yes
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            No
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+</v-card-actions>
+
+              </v-col>
             </v-card>
            
           </v-col>
@@ -188,19 +281,19 @@
     </v-data-iterator>
    
   </v-container>
-  <student_page class="mt-5"/>
+  <material-page/>
 </v-flex>
 
 </template>
 
 <script>
 
-import student_page from "@/components/Student/student_page.vue"
+import MaterialPage from './materialPage.vue'
  
 export default {
    
    components: {
-    student_page
+      MaterialPage
     },
 
     data () {
@@ -213,6 +306,9 @@ export default {
         page: 1,
         itemsPerPage: 8,
         sortBy: 'name',
+        dialog: false,
+        dialog1: false,
+      
         keys: [
           'Year', 
           //'Semester',
@@ -221,56 +317,67 @@ export default {
           {
             name: 'Data Structure',
             year: 2,
+            file: 'xyz place',
             Semester: 1,
           },
           {
             name: 'Database ',
              year: 2,
+            file: 'xyz place',
              Semester: 2 ,
           },
           {
             name: 'Web Design',
             year: 2,
+            file: 'xyz place',
              Semester:1 ,
           },
           {
-            name: 'Software Quality Assurance and Testing ',
+            name: 'SQAT ',
             year: 4,
+            file: 'xyz place',
              Semester: 2,
           },
           {
             name: 'Programming I',
              year: 1,
+            file: 'xyz place',
              Semester:1, 
           },
           {
             name: 'Multimedia System',
              year: 4,
+            file: 'xyz place',
              Semester: 2 
           },
           {
             name: 'Entreprenership',
             year: 4,
+            file: 'xyz place',
              Semester: 2
           },
           {
-            name: 'Advanced Programming',
+            name: 'system programming',
             year: 2,
+            file: 'xyz place',
              Semester: 1 
           },
           {
             name: 'Digital Logic Design',
             year: 1,
+            file: 'xyz place',
              Semester: 1 
           },
           {
             name: 'Operating System',
             year: 3,
+            file: 'xyz place',
              Semester: 1 
           },
             {
             name: 'Programming II',
              year: 1,
+            file: 'xyz place',
              Semester: 2
           },
         ],
@@ -294,6 +401,7 @@ export default {
       updateItemsPerPage (number) {
         this.itemsPerPage = number
       },
+      
     },
   }
 </script>

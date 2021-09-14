@@ -1,25 +1,26 @@
 <template>
-
  <v-app id="inspire" >
   
    <v-navigation-drawer 
     v-model="drawer"
     app
-
     >
+
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6" >
             AASTU Student's Center
           </v-list-item-title>
-          <v-list-item-subtitle class="text-uppercase">Club President</v-list-item-subtitle>
+          <v-list-item-subtitle class="text-uppercase"> Materials Admin</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
+   
+        <v-divider></v-divider>
 
-      <v-divider></v-divider>
-
-
-        <v-card v-for="person in Personal_info" :key="person" flat >
+        <v-card 
+         v-for="person in Personal_info" 
+         :key="person" 
+          flat >
           <v-responsive class="pt-4 pl-5 ">
           <v-avatar size="60" >
           <v-img :src="person.avatar" /> 
@@ -29,11 +30,9 @@
           <v-col>
           <div class="text-h6" >{{ person.name + " " + person.lastname }}</div>
       
-       
           </v-col>
-       </v-card>
-         <v-divider></v-divider>
-
+        </v-card>
+        <v-divider></v-divider>
 
       <v-list
         dense
@@ -54,8 +53,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-
-      
       <template v-slot:append>
         <div class="pa-2" >
           <v-btn block dark>
@@ -69,7 +66,7 @@
       app
       dark
       height="80"
-    
+      fixed
     >
    <v-app-bar-nav-icon @click="drawer = !drawer " ></v-app-bar-nav-icon>
      <v-img
@@ -102,21 +99,19 @@
 
 export default ({
   
-name: 'clubPres',
+name: 'infoPage',
 
   data: () => ({
+
     drawer: true,
     items: [
-          { title: 'Home', icon: 'mdi-home', to:'/cpres' },
-          { title: 'Members', icon: 'mdi-account-group-outline', to:'clubDetail' }, 
-          { title: 'Events', icon: 'mdi-calendar-multiple' , to:'/events' },
-          { title: 'Applicants', icon: 'mdi-account', to:'/applicants' },
-        ],
-        
- Personal_info: [
-          {name:'someone', lastname:'father', avatar: require('@/assets/avatar_2.png'),}
+          { title: 'Home', icon: 'mdi-home', to:'/materialHome' },
+          { title: 'Materials', icon: 'mdi-note-multiple-outline' , to:'/materialEdit' },
             ],
 
+           Personal_info: [
+          {name:'someone', lastname:'somebody', avatar: require('@/assets/avatar_2.png'),}
+            ],
   }),
 
 })

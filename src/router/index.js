@@ -20,6 +20,13 @@ import cpres from '../components/Club President/cpres.vue'
 import events from '../components/Club President/events.vue'
 import applicants from '../components/Club President/applicants.vue'
 import clubDetail from '../components/Club President/clubDetail.vue'
+import addClub from '../components/Club President/addClub.vue'
+import infoPage from '../components/infoAdmin/infoPage.vue'
+import infoHome from'../components/infoAdmin/infoHome.vue'
+import feedback from '../components/infoAdmin/feedback.vue'
+import materialPage from '../components/Material Admin/materialPage.vue'
+import materialHome from '../components/Material Admin/materialHome.vue'
+import materialEdit from '../components/Material Admin/materialEdit.vue'
 
 
 Vue.use(VueRouter)
@@ -120,6 +127,41 @@ const routes = [
   path: '/clubDetail',
   name: 'clubDetail',
   component: clubDetail
+},
+{
+  path: '/addClub',
+  name: 'addClub',
+  component: addClub
+},
+{
+  path: '/infoPage',
+  name: 'infoPage',
+  component: infoPage
+},
+{
+  path: '/infoHome',
+  name: 'infoHome',
+  component: infoHome
+},
+{
+  path: '/feedback',
+  name: 'feedback',
+  component: feedback
+},
+{
+  path: '/materialPage',
+  name: 'materialPage',
+  component: materialPage
+},
+{
+  path: '/materialHome',
+  name: 'materialHome',
+  component: materialHome
+},
+{
+  path: '/materialEdit',
+  name: 'materialEdit',
+  component: materialEdit
 },
 {
   path: '/super',

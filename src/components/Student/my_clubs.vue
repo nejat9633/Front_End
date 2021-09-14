@@ -161,16 +161,7 @@
     </v-btn>
  
   </v-flex>
-          <!--  <v-card >
-            <v-img :src="item.image"  height="200"
-         contain   ></v-img>
-
-              <v-card-title class="subheading font-weight-bold">
-                {{ item.name }}
-              </v-card-title> 
-              <v-divider></v-divider>             
-            </v-card>
-           -->
+         
           </v-col>
         </v-row>
       </template>
@@ -258,8 +249,7 @@ export default {
         
       return {
         overlay: false,
-      alert: false,
-
+        alert: false,
         itemsPerPageArray: [4, 8, 12],
         search: '',
         filter: {},

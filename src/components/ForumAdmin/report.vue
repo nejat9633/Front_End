@@ -37,16 +37,6 @@
       >
       View Reports
       </v-btn>
-<!--
-      <v-btn
-        text
-        outlined
-        color="red"
-        @click="reveal = true"
-      >
-        Ban Account
-      </v-btn>
-      -->
 
        <v-btn
       outlined
@@ -90,19 +80,11 @@
       <p> {{questn.firstname + " " + questn.lastname}} </p>
       <div class="text--primary">
    <p> This student has been reported {{ questn.count }} times. </p>
-      <!--  {{questn.question}}-->
+    
       </div>
     </v-card-text>
     <v-card-actions>
-   <!--   <v-btn
-      outlined
-        text
-        color="primary"
-        @click="reveal = true"
-      >
-        Delete
-      </v-btn>
-      -->
+   
       <v-btn
         text
         outlined
