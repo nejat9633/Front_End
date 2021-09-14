@@ -5,7 +5,9 @@
 
 <v-container>
 <h3>List of Students Application</h3>
-  <v-card v-for="person in applicants" v-bind:key="person"
+{{response}}
+
+  <v-card v-for="person in response" v-bind:key="person"
     class="mx-auto"
     max-width="auto"
     flat
@@ -17,7 +19,7 @@
     
       <p class="font-weight-regular"> Name: {{person.firstname + " " + person.lastname}} </p>
       <p class="font-weight-regular"> Department: {{person.department}} </p>
-      <p class="font-weight-regular"> Club: {{person.club}} </p>
+      <p class="font-weight-regular"> Club: Aastu Union </p>
       <p class="font-weight-regular"> Reason: {{ person.reason }} </p>
     
     </div>
@@ -43,33 +45,50 @@
       </v-btn>
  
     </v-card-actions>
+  
   </v-card>
 </v-container>
-   
+  <div  v-if="noApplicant" class="mx-auto my-auto " max-width="auto">
+    
+      <h3 class="grey--text" >{{noApplicant}} 
+        <v-btn
+           text
+           flat
+        color="blue"
+      >
+       Add Details
 
+        </v-btn></h3>
+  
+</div>
 
 </v-card>
 
-
-
-<club-pres/>
+<clubPres/>
 </v-container>
 
 </template>
 
 
 <script>
-import clubPres from '@/components/Club President/clubPres.vue'
-
+import clubPres from '@/components/clubPresident/clubPres.vue'
+import axios from 'axios'
+const url = 'http://localhost:8888/api/'
+const userId = localStorage.getItem('user');
+const token = localStorage.getItem('tok');
 export default ({
    components: {
         clubPres,
     },
-
+   
 
  data: ()=>{
         return{
-        applicants:[
+          response:'',
+          message:'',
+          noApplicant:'',
+
+          applicants:[
             {
                 firstname: "samri",
                 lastname: "Sifen", 
@@ -96,7 +115,24 @@ export default ({
                 reason: "How to eat without chewing ?"
             }
         ], 
-        }
+      }
+ },
+ beforeMount(){
+     axios.get(`${url}notifyCP/${userId}` , {headers:{
+          'Authorization': `Bearer ${token}`
+   }})
+        .then((res)=>{
+          if(res.data.status == 'failure'){
+            this.message = res.data.message
+             this.noApplicant = "There are no students who applied to this club."
+            }
+            else{
+            this.response = res.data.users
+            }
+          
+         }).catch((err)=>{
+           this.noApplicant = 'Error occured while displaying'
+         })
  }
 
 })

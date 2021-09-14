@@ -116,7 +116,7 @@
 
 
 <script>
-import events from './events.vuev'
+import events from './events.vue'
 export default {
   name: 'App',
 

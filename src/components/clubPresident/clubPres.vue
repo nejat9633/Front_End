@@ -19,16 +19,16 @@
       <v-divider></v-divider>
 
 
-        <v-card v-for="person in Personal_info" :key="person" flat >
+        <v-card   flat >
           <v-responsive class="pt-4 pl-5 ">
           <v-avatar size="60" >
-          <v-img :src="person.avatar" /> 
+          <v-img :src="require('@/assets/avatar_2.png')" /> 
          </v-avatar>
           </v-responsive>
          
           <v-col>
-          <div class="text-h6" >{{ person.firstname + " " + person.lastname }}</div>
-          <div class="text-h6" >{{  person.email }}</div>
+          <div class="text-h6" >{{ Personal_info.firstname + " " + Personal_info.lastname }}</div>
+          <div class="text-h6" >{{  Personal_info.email }}</div>
       
        
           </v-col>
@@ -85,8 +85,6 @@
       <v-toolbar-title class="text-uppercase"> AASTU Student's Center </v-toolbar-title>
       
     </v-app-bar>
-    <clubD/>
-   <div><h1>BIG TEXT</h1></div>
 <v-flex >
 <v-container>
 
@@ -117,10 +115,10 @@ name: 'clubPres',
   data: () => ({
     drawer: true,
     items: [
-          { title: 'Home', icon: 'mdi-home', to:'/cpres' },
-          { title: 'Clubs', icon: 'mdi-account-group-outline', to:'clubDetail' }, 
-          { title: 'Events', icon: 'mdi-calendar-multiple' , to:'/events' },
-          { title: 'Applicants', icon: 'mdi-account', to:'/applicants' },
+          { title: 'Home', icon: 'mdi-home', to:'/clubpresident'},
+          { title: 'Members', icon: 'mdi-account-group-outline', to:'/members'}, 
+          { title: 'Events', icon: 'mdi-calendar-multiple' , to:'/events'},
+          { title: 'Applicants', icon: 'mdi-account', to:'/applicants'},
         ],
         
  Personal_info: [
@@ -137,7 +135,7 @@ name: 'clubPres',
                  }
                  else{
                      this.Personal_info = res.data.user
-                     this.response = res.data
+                     this.response = res.data.user
                      this.status= true
                      console.log("true" + res.data.user)
                  }

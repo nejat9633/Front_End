@@ -2,7 +2,7 @@
 <v-flex>
   <v-container class="mx-lg my-12" >
     <v-row class="mx-16">
-      <v-col class="mx-15">
+      <v-col class="mx-0">
         <v-row class="mx-9" justify="center">
           <v-col class="mx-15">
             <v-form

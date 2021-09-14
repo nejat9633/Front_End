@@ -20,15 +20,20 @@ import materialAdmin from '../views/materialAdmin.vue'
 import reports from '../components/forumAdmin/reports.vue'
 import forumstudents from '../components/forumAdmin/students.vue'
 import forumfeedbacks from '../components/forumAdmin/feedbacks.vue'
+import banned from '../components/forumAdmin/banned.vue'
 import forumquestions from '../components/forumAdmin/questions.vue'
-import events from '../components/infoAdmin/events.vue'
+import infoevents from '../components/infoAdmin/events.vue'
 import infoAdmin from '../components/infoAdmin/admin_page.vue'
 import forum from '../components/forum.vue'
 import questionanswer from '../components/forumQ&A.vue'
 import forgotPassword from '../views/forgotPassword.vue'
 //import student from '../views/student.vue'
-import clubPresident from '../components/clubPresident/clubPres.vue'
+import cpres from '../components/clubPresident/cpres.vue'
+
 import club from '../components/club_home'
+import applicants from '../components/clubPresident/applicants'
+import events from '../components/clubPresident/events.vue'
+import members from '../components/clubPresident/clubDetail.vue'
 
 
 Vue.use(VueRouter)
@@ -40,9 +45,29 @@ const routes = [
     component: vue
   },
   {
+    path: '/members',
+    name: 'members',
+    component: members
+  },
+  {
+    path: '/banned',
+    name: 'banned',
+    component: banned
+  },
+  {
     path: '/clubs',
     name: 'club',
     component: club
+  },
+  {
+    path: '/events',
+    name: 'events',
+    component: events
+  },
+  {
+    path: '/clubpresident',
+    name: 'cpres',
+    component: cpres
   },
   {
     path: '/',
@@ -116,9 +141,9 @@ const routes = [
 },
 
 {
-  path: '/events',
-  name: 'events',
-  component: events,
+  path: '/infoevents',
+  name: 'infoevents',
+  component: infoevents,
   meta: {requiresAuth : true}
 },
 {
@@ -150,12 +175,14 @@ const routes = [
   name: 'materialAdmin',
   component: materialAdmin,
   meta: {requiresAuth : true}
-},{
-  path: '/clubPresident',
-  name: 'clubPresident',
-  component: clubPresident,
+},
+{
+  path: '/applicants',
+  name: 'applicants',
+  component: applicants,
   meta: {requiresAuth : true}
-},{
+},
+{
   path: '/forumAdmin',
   name: 'forumAdmin',
   component: forumAdmin,

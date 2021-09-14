@@ -4,18 +4,19 @@
  <h2> Detailed Members Information   </h2>
 </div>
 
-<v-card flat class="pa-5 my-3" >
-    <v-row justify="center">
-    <v-expansion-panels inset>
-      <v-expansion-panel
-        v-for="(member) in Members"
-        :key="member"
-      >
-        <v-expansion-panel-header >{{member.club}}</v-expansion-panel-header>
-        <v-expansion-panel-content>
-
-
-             <v-simple-table height="300px">
+<v-card flat class="pa-5 my-3" color="grey ligthen-2">
+    <v-alert 
+      v-if="message"
+      border="left"
+      class="pa-5  mx-4 text-h5 grey"
+      background-color="grey"
+      colored-border
+      color="red "
+      elevation="2"
+    >
+<h3>{{message}}</h3>
+    </v-alert>
+             <v-simple-table>
     <template v-slot:default>
       <thead>
         <tr>
@@ -28,6 +29,9 @@
           <th class="text-left">
             Department
           </th>
+          <th class="text-left">
+            Action
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -38,18 +42,51 @@
           <td>{{ member.firstname }}</td>
           <td>{{ member.lastname }}</td>
           <td>{{ member.department }}</td>
-
+          <td>  
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="290"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+        text
+          color="red"
+          v-bind="attrs"
+          v-on="on"
+          small
+          outlined
+        >
+          KICK OUT
+        </v-btn>
+      </template>
+      <v-card>
+        
+        <v-card-text> <br/> Are you sure you want to kick out this student? </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Yes
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            No
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </td>
         </tr>
       </tbody>
     </template>
   </v-simple-table>
-
-
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-  </v-row>
-    
 </v-card>
     <club-pres/>
     </v-container>
@@ -59,40 +96,50 @@
 
 <script>
 import clubPres from '@/components/clubPresident/clubPres.vue'
-import clubD from './clubDetail.vue'
-import axios from "axios";
-const qID = localStorage.getItem("qID");
-const url = "http://localhost:8888/api/";
-const token = localStorage.getItem("tok");
-const userId = localStorage.getItem("user");
+import axios from 'axios'
+const url = 'http://localhost:8888/api/'
+const userId = localStorage.getItem('user');
+const token = localStorage.getItem('tok');
 export default ({
    components: {
         clubPres,
     },
     data() {
         return{
-          members:'',
-          message:'',
+           dialog: false,
+           members:'',
+           message:'',
     Members: [
         {
             firstname: 'x', 
             lastname: 'y', 
             department: 'swe', 
-            club: 'Charity Club'
+         
+        }, 
+         {
+
+            firstname: 'y', 
+            lastname: 'yx', 
+            department: 'arch', 
+        
         },
         {
 
             firstname: 'y', 
             lastname: 'yx', 
             department: 'arch', 
-            club: 'Multimedia Club'
+           
         },
 
     ]
         }
         },
+     
         mounted(){
-          axios.get(`${url}getclubmembers/${userId}`).then((res)=>{
+          axios.get(`${url}getclubmembers/${userId}`, {headers:{
+          'Authorization': `Bearer ${token}`
+          }}).then((res)=>{
+
            if(res.data.status == 'success'){
                    this.members = res.data.members
 

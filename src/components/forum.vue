@@ -24,7 +24,7 @@
         class="ma-1"
       ></v-text-field>
     </v-bottom-navigation>
-    <v-alert 
+    <v-alert
       v-if="msgforum"
       border="left"
       background-color="grey"
@@ -32,7 +32,7 @@
       color="red "
       elevation="2"
     >
-<h3>{{msgforum}}</h3>
+      <h3>{{ msgforum }}</h3>
     </v-alert>
     <div class="pa-3 headline text-h5 dark">
       <span>Highly Rated Questions</span>
@@ -48,26 +48,26 @@
             v-for="question in questions"
             :key="question"
           >
-            <v-layout row wrap >
+            <v-layout row wrap>
               <v-flex>
                 <v-avatar>
                   <v-img :src="require('../assets/avatar_1.png')" />
                 </v-avatar>
                 <div class="caption black--text">{{ question.title }}</div>
                 <div>{{ question.description }}</div>
-              
+
                 <v-card-actions class="pa-4 " flat>
-                      <v-btn
-                        class=" pa-3 mx-1"
-                        color="blue accent-2"
-                        text
-                        @click="giveAnswer(question._id)"
-                        transparent
-                      >
-                        {{ 3 }}
-                        <!--put the number of answers given using a coounter of the answers-->
-                        answers
-                      </v-btn>
+                  <v-btn
+                    class=" pa-3 mx-1"
+                    color="blue accent-2"
+                    text
+                    @click="giveAnswer(question._id)"
+                    transparent
+                  >
+                    {{ 3 }}
+                    <!--put the number of answers given using a coounter of the answers-->
+                    answers
+                  </v-btn>
 
                   <v-btn
                     class="pa-3 mx-1"
@@ -78,8 +78,9 @@
                     <v-icon class="mr-3">mdi-thumb-up</v-icon>
                     {{ question.rate }}
                     Like
-                  </v-btn>
+                  </v-btn> {{question.title}}
                   <v-dialog v-model="dialog2" max-width="600px">
+                    
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         class="pa-3 mx-1"
@@ -87,7 +88,6 @@
                         text
                         v-on="on"
                         v-bind="attrs"
-                        @click="report()"
                       >
                         <v-icon class="mr-3">mdi-alert-circle</v-icon>
                         Report
@@ -104,7 +104,7 @@
                         <v-form class="px-3">
                           <v-select> </v-select>
                           <v-textarea
-                            v-model="description"
+                            v-model="reason"
                             label="Enter your reason"
                             clearable
                             prepend-icon=" mdi-pencil"
@@ -152,6 +152,7 @@
                 {{ item }}
               </v-chip>
             </v-chip-group>
+            {{message}}
           </v-card>
         </v-col>
       </v-row>
@@ -167,48 +168,74 @@ const userId = localStorage.getItem("user");
 export default {
   components: {},
   methods: {
-    giveAnswer(qID) {
-      console.log(qID);
-        localStorage.setItem('qID', qID);
-        console.log('clicked')
-        this.$router.push('/question&answer')
-      },
-    Like(qID) {
-      if (localStorage.getItem("tok") == null  ) {
+    report(qID) {
+      if (localStorage.getItem("tok") == null) {
         this.msgforum = "You need to login first.";
         setTimeout(() => this.$router.push("/login"), 4000);
-      }
-     else if(localStorage.getItem('role') != 'student'){
+      } else if (localStorage.getItem("role") != "student") {
         this.msgforum = "Sorry, You are not authorized for this Action.";
-        setTimeout(() => this.$router.push("/forum"), 4000); 
+        setTimeout(() => this.$router.push("/forum"), 4000);
+      } else if (!userId) {
+        this.msgforum =
+          "Please, You need to login first to post answer, like and report.";
+        setTimeout(() => {
+          this.$router.push("/forum");
+        }, 4000);
+      } else {
+        let data = {
+          qID: qID,
+          reason: this.reason,
+        };
+        axios
+          .post(`${url}reportQuestion/${userId}`, data, {
+            headers: { Auhorization: `Bearer ${token}` },
+          })
+          .then((res) => {
+            if (res.data.status == "success") {
+              this.reportmessage = res.data.message;
+              this.$forceUpdate();
+            } else this.reportmessage = res.data.message;
+          });
       }
-
-     else if(!userId){
-        this.msgforum = 'Please, You need to login first to post answer, like and report.'
-        setTimeout(()=>{
-        this.$router.push('/forum')
-
-        }, 4000)
-        
-      }
-      else{
-      axios
-        .post(`${url}rateQuestion/${qID}`, {
-          headers: { 'Auhorization': `Bearer ${token}` },
-        })
-        .then((res) => {
-          if (res.data.status == "success") {
-            this.message = res.data.message;
-            this.rate = res.data.rate
-            this.$forceUpdate()
-          } else this.message = res.data.message;
-        });
+    },
+    giveAnswer(qID) {
+      console.log(qID);
+      localStorage.setItem("qID", qID);
+      console.log("clicked");
+      this.$router.push("/question&answer");
+    },
+    Like(qID) {
+      if (localStorage.getItem("tok") == null) {
+        this.msgforum = "You need to login first.";
+        setTimeout(() => this.$router.push("/login"), 4000);
+      } else if (localStorage.getItem("role") != "student") {
+        this.msgforum = "Sorry, You are not authorized for this Action.";
+        setTimeout(() => this.$router.push("/forum"), 4000);
+      } else if (!userId) {
+        this.msgforum =
+          "Please, You need to login first to post answer, like and report.";
+        setTimeout(() => {
+          this.$router.push("/forum");
+        }, 4000);
+      } else {
+        axios
+          .post(`${url}rateQuestion/${qID}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+          })
+          .then((res) => {
+            if (res.data.status == "success") {
+              this.message = res.data.message;
+              this.rate = res.data.rate;
+              this.$forceUpdate();
+            } else this.message = res.data.message;
+          });
       }
     },
     getAnswers(qID) {
       axios
-        .get(`${url}getallAnswers/${qID}`, 
-       // {  headers: { Authorization: `Bearer ${token}` },
+        .get(
+          `${url}getallAnswers/${qID}`
+          // {  headers: { Authorization: `Bearer ${token}` },
         )
         .then((res) => {
           if (res.data.status == "success") {
@@ -238,17 +265,19 @@ export default {
   data: () => {
     return {
       message: "",
+      reason: "",
       answerMessage: "",
-      rate:null,
+      rate: null,
       dialog: false,
-      msgforum:'',
+      msgforum: "",
       dialog2: false,
       description: "",
       response: "",
+      reportmessage: "",
       questions: [],
       answers: [],
       item: ["programming", "Graphics", "Architecture"],
     };
   },
-}
+};
 </script>

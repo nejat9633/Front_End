@@ -155,7 +155,7 @@ export default {
         ],
 
         access: [
-          {title: 'Students' ,icon: 'mdi-note multiple', to: '/forumstudents'},
+          {title: 'Banned students' ,icon: 'mdi-note multiple', to: '/banned'},
           {title: 'Questions' ,icon: 'mdi-account-group', to: '/questions'},
           {title: 'Reports' ,icon: 'mdi-frequently-asked-questions', to: '/reports'},
           {title: 'Feedbacks' ,icon: 'mdi-account-group', to: '/forumfeedbacks'},

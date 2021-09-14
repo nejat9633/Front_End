@@ -22,7 +22,7 @@
         <v-card-text v-bind:event="event">
           <h2 class="text-h6 primary--text">
             {{event.title}}
-            {{event.file}}
+           
           </h2>
         <v-img :src="require(`../assets/${event.file}`)" height="350" contain></v-img>
 

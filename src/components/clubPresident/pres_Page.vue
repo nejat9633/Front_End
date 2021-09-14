@@ -122,6 +122,7 @@ export default {
  components: {
     
   },
+
   
   data: () => ({
     drawer: null,
@@ -149,6 +150,22 @@ export default {
           {name:'someone', id:'email@gmail.com', department: 'SWE', avatar: '../../assets/avatar_2.png'}
             ],
   }),
+  mounted(){
+  axios.get(`${url}/findUser/${userId}`).then((res)=>{
+           if(res.data.status == 'failure'){
+                   this.message = res.data.message
+
+                   this.status = false
+                 }
+                 else{
+                     this.Personal_info = res.data.user
+                     this.response = res.data
+                     this.status= true
+                     console.log("true" + res.data.user)
+                 }
+        })
+  },
+  
   methods:{
       logout(){
           localStorage.clear();
