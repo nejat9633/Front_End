@@ -5,9 +5,19 @@
 
 <v-container>
 <h3>List of Students Application</h3>
-{{response}}
 
-  <v-card v-for="person in response" v-bind:key="person"
+<v-alert 
+      v-if="applicant"
+      border="left"
+      class="pa-5  mx-4 text-h5 grey"
+      background-color="grey"
+      colored-border
+      color="red "
+      elevation="2"
+    >
+<h3>{{applicant}}</h3>
+    </v-alert>
+  <v-card v-for="(person, index) in response" v-bind:key="person"
     class="mx-auto"
     max-width="auto"
     flat
@@ -15,12 +25,13 @@
   >
   
     <v-card-text >
+
     <div >
     
       <p class="font-weight-regular"> Name: {{person.firstname + " " + person.lastname}} </p>
       <p class="font-weight-regular"> Department: {{person.department}} </p>
       <p class="font-weight-regular"> Club: Aastu Union </p>
-      <p class="font-weight-regular"> Reason: {{ person.reason }} </p>
+      <p class="font-weight-regular"> Reason: {{ person.WhyThisClub }} </p>
     
     </div>
     </v-card-text>
@@ -30,7 +41,7 @@
       outlined
         text
         color="primary"
-        @click="reveal = true"
+        @click="reveal = true && approve(person._id, index)"
       >
         Accept
       </v-btn>
@@ -39,9 +50,10 @@
         text
         outlined
         color="red"
-        @click="reveal = true"
+        @click="reveal = true && decline(person._id)"
       >
        Reject
+       
       </v-btn>
  
     </v-card-actions>
@@ -57,7 +69,6 @@
         color="blue"
       >
        Add Details
-
         </v-btn></h3>
   
 </div>
@@ -87,6 +98,7 @@ export default ({
           response:'',
           message:'',
           noApplicant:'',
+          applicant:'',
 
           applicants:[
             {
@@ -117,6 +129,51 @@ export default ({
         ], 
       }
  },
+ methods:{
+   approve(a_Id, index){
+     let data={
+     aid: a_Id
+   }
+axios.post(`${url}approveApplicant/${userId}`,data , {headers:{
+          'Authorization': `Bearer ${token}`
+   }})
+        .then((res)=>{
+          if(res.data.status == 'success'){
+            this.message = res.data.users
+             this.applicant = "Applicant is approved"
+             setTimeout(()=> this.response.splice(index, 1), 3000)
+            // this.response.splice(index, 1);
+            }
+            else{
+            this.applicant = "Could not approve."
+            }
+          
+         }).catch((err)=>{
+           this.applicant = 'Error occured while displaying'
+         })
+   },
+  approve(a_Id, index){
+    
+axios.post(`${url}declineApplicant/${a_Id}` , {headers:{
+          'Authorization': `Bearer ${token}`
+   }})
+        .then((res)=>{
+          if(res.data.status == 'success'){
+            this.message = res.data.users
+             this.applicant = "Applicant has been Rejected."
+             setTimeout(()=> this.applicant.splice(index, 1), 3000)
+            // this.response.splice(index, 1);
+            }
+            else{
+            this.applicant = "Could not approve."
+            }
+          
+         }).catch((err)=>{
+           this.applicant = 'Error occured while displaying'
+         })
+   }
+ },
+
  beforeMount(){
      axios.get(`${url}notifyCP/${userId}` , {headers:{
           'Authorization': `Bearer ${token}`

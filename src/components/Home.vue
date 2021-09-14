@@ -17,7 +17,7 @@
         class="mx-auto"
         max-width="344"
        min-height="450" 
-       max-height="450"
+       max-height="auto"
        >
         <v-card-text v-bind:event="event">
           <h2 class="text-h6 primary--text">
@@ -26,7 +26,8 @@
           </h2>
         <v-img :src="require(`../assets/${event.file}`)" height="350" contain></v-img>
 
-          Travel to the best outdoor experience on planet Earth. A vacation you will never forget!
+          <h5> Travel to the best outdoor experience on planet Earth. A vacation you will never forget! </h5>
+           Posted On: {{event.posted_date}}
         </v-card-text>
           
         <v-fade-transition>
