@@ -174,7 +174,9 @@
           </v-col>
         </v-row>
       </template>
-
+<v-alert v-if="message">
+  {{message}}
+</v-alert>
 
       <template v-slot:footer>
         <v-row

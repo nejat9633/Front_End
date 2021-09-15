@@ -10,7 +10,7 @@
   color="grey lighten-2"
     >
     <v-card-title > 
-        <h2 align-center>{{club_info.clubname}}</h2>
+        <h2 align-center>{{club_info[0].clubname}}</h2>
     </v-card-title>
 
 <v-divider></v-divider> 
@@ -26,7 +26,7 @@
 
 <v-col>
 
-<div class=" black--text font-weight-medium" >{{club_info.club_description}}</div>
+<div class=" black--text font-weight-medium" >{{club_info[0].club_description}}</div>
  <v-card-actions>
 
 <v-dialog max-width="600px">

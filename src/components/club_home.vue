@@ -1,14 +1,24 @@
 <template>
     <v-container>
         <v-row>
-                <div  class="pa-3  text-h5 dark" >
+                <div  class="pa-3  text-h4 dark" >
                     <span> Clubs in AASTU </span>
                 </div>
         </v-row>
 <template >
 
  <v-container >
-       
+       <v-row>
+                <div  class="pa-3  text-h5 dark" >
+                    <span> Make sure You are logged in before applying to any club here. </span>
+                     <span> Or You can always <a> Signup </a> Here. </span>
+                </div>
+       </v-row>
+       <v-row>
+         <v-alert v-if="alert" color="green accent-4" elevation="2">
+           {{alert}}
+         </v-alert>
+       </v-row>
 <v-row >
 
 <v-card v-for="(club) in clubs"
@@ -53,8 +63,8 @@
    </div>
   </v-col>
   <v-col cols="">
-       <div class=" black--text"> Club President: {{}}</div>
-        <div>{{}} </div>
+       <div class=" black--text"> Club President: {{club.userId[0].firstname}} {{club.userId[0].lastname}}</div>
+        <div>Contact: {{club.userId[0].email}} </div>
 
   </v-col>
   </v-row>
@@ -81,6 +91,9 @@
       </template>
 
 <v-card>
+    <v-alert v-if="alert" color="green accent-4" elevation="2">
+           {{alert}}
+         </v-alert>
     <v-card-title> 
         <h2>Apply </h2>
     </v-card-title>
@@ -102,7 +115,7 @@
         >
         </v-textarea>
        
-        <v-btn flat class="success mx-0 mt-3" @click="submit"> Submit Application </v-btn>
+        <v-btn flat class="success mx-0 mt-3" @click="submit(club._id)"> Submit Application </v-btn>
      </v-form>
   </v-card-text>  
 </v-card>
@@ -121,26 +134,52 @@
 import axios from 'axios'
 import pageHeader from './pageHeader.vue'
 const url = 'http://localhost:8888/api/'
-
+const userId = localStorage.getItem('user')
+const token = localStorage.getItem('tok')
 export default {
   components: { pageHeader },
    
 data() { 
   return{
       overlay: false,
-      alert: false,
+      alert: '',
       message:'',
       reason:'',
-       name:'tester',
-        notice: '',  
-        clubs:''  
+      department:'',
+      name:'tester',
+      notice: '',  
+      clubs:'' ,
+      clubId:'' 
 
   }
    
 }, 
 methods:{
-  apply(cID){
+  submit(clubId){
+    if(localStorage.getItem('tok') == null){
+      this.alert = "Sorry, You need to login first to apply to any Club."
+    }
+    else{
+      let form = new FormData()
+      form.append('clubId', clubId)
+      form.append('WhyThisClub', this.reason)
+      form.append('department', this.department)
 
+   axios.get(`${url}studentApplyClub/${userId}`, form, {headers: 
+              {'Authorization':`Bearer ${token}`}})
+             .then((res) => {
+                 if(res.data.status == 'failure'){
+                   this.alert = " Could not apply for this Club."
+                 }
+                 else{
+                     this.alert = res.data.message
+                     console.log("true" + res.data)
+                 }
+             })
+             .catch((err)=>{
+               this.message = "An error has been occured from server."
+             })
+    }
   }
 },
 mounted(){
