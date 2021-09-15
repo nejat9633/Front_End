@@ -20,14 +20,14 @@
        max-height="auto"
        >
         <v-card-text v-bind:event="event">
-          <h2 class="text-h6 primary--text">
-            {{event.title}}
-           
-          </h2>
+          
         <v-img :src="require(`../assets/${event.file}`)" height="350" contain></v-img>
+           <h2 class="text-h6 my-2 primary--text">
+            {{event.title}}
+          </h2>
 
-          <h5> Travel to the best outdoor experience on planet Earth. A vacation you will never forget! </h5>
-           Posted On: {{event.posted_date}}
+          <h4 class="my-2 dark--text"> {{event.body}}Travel to the best outdoor experience on planet Earth. A vacation you will never forget! </h4>
+           <h5> Posted On: {{event.posted_date}} </h5>
         </v-card-text>
           
         <v-fade-transition>

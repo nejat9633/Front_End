@@ -82,7 +82,7 @@
   
       <template v-slot:append>
         <div class="pa-2" >
-          <v-btn block dark>
+          <v-btn block dark @click="logout()">
             Logout
           </v-btn>
         </div>
@@ -124,6 +124,12 @@ export default {
 
  components: {
     
+  },
+  methods:{
+    logout(){
+      localStorage.clear();
+      this.$router.push('/')
+    }
   },
   mounted(){
   axios.get(`${url}/findUser/${userId}`).then((res)=>{

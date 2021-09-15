@@ -9,17 +9,17 @@
 
  <v-container >
        <v-row>
-                <div  class="pa-3  text-h5 dark" >
+                <div  class="pa-3  text-h5 grey--text dark" >
                     <span> Make sure You are logged in before applying to any club here. </span>
                      <span> Or You can always <a> Signup </a> Here. </span>
                 </div>
        </v-row>
        <v-row>
-         <v-alert v-if="alert" color="green accent-4" elevation="2">
+         <v-alert v-if="alert" color="green accent-1" elevation="2">
            {{alert}}
          </v-alert>
        </v-row>
-<v-row >
+<v-row v-if="apply != true" >
 
 <v-card v-for="(club) in clubs"
             :key="club"
@@ -46,7 +46,7 @@
 <h2 class="black--text">{{club.clubname}}</h2>
 
         <div class=" black--text">
-        {{club.club_description}}}
+        {{club.club_description}}
         </div>
 
   </v-col>
@@ -72,7 +72,7 @@
   
   
 <v-card-actions>
-  <v-dialog max-width="600px">
+  <v-dialog v-model="dialog" max-width="600px">
 
 <template v-slot:activator="{ on, attrs }">
 <v-flex> 
@@ -104,18 +104,23 @@
 
    <v-form class="px-3" >
 
-        <v-text-field  label="Enter your department"
+        <v-text-field v-model="department" label="Enter your department"
             clearable>
         </v-text-field>
 
-        <v-textarea  
+        <v-text-area  
          v-model="reason" 
          label="Why do you want to join this club? "
          clearable
         >
-        </v-textarea>
+        </v-text-area>
+       <v-text-field  clearable label="Why do you want to join this club?">
+
+       </v-text-field>
        
-        <v-btn flat class="success mx-0 mt-3" @click="submit(club._id)"> Submit Application </v-btn>
+        <v-btn flat class="success mx-2 mt-3" @click="submit(club._id)"> {{club._id}} Submit Application </v-btn>
+        <v-btn flat class="success mx-2 mt-3" @click="dialog = false"> Cancel </v-btn>
+      
      </v-form>
   </v-card-text>  
 </v-card>
@@ -132,17 +137,21 @@
 </template>
 <script>
 import axios from 'axios'
+import forum from './forum.vue'
 import pageHeader from './pageHeader.vue'
+import Forum from './forum.vue'
 const url = 'http://localhost:8888/api/'
 const userId = localStorage.getItem('user')
 const token = localStorage.getItem('tok')
 export default {
-  components: { pageHeader },
+  components: { pageHeader, forum, Forum },
    
 data() { 
   return{
       overlay: false,
       alert: '',
+      apply:false,
+      dialog:false,
       message:'',
       reason:'',
       department:'',
@@ -155,21 +164,29 @@ data() {
    
 }, 
 methods:{
+  apply(){
+    this.apply = true
+  },
   submit(clubId){
     if(localStorage.getItem('tok') == null){
       this.alert = "Sorry, You need to login first to apply to any Club."
     }
     else{
+      let data ={
+        clubId: clubId,
+        WhyThisClub: this.reason,
+        department:this.department
+      }
       let form = new FormData()
       form.append('clubId', clubId)
       form.append('WhyThisClub', this.reason)
       form.append('department', this.department)
-
-   axios.get(`${url}studentApplyClub/${userId}`, form, {headers: 
+  console.log(clubId);
+   axios.post(`${url}studentApplyClub/${userId}`, data, {headers: 
               {'Authorization':`Bearer ${token}`}})
              .then((res) => {
                  if(res.data.status == 'failure'){
-                   this.alert = " Could not apply for this Club."
+                   this.alert = res.status.message
                  }
                  else{
                      this.alert = res.data.message

@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.21.3",
     "core-js": "^3.6.5",
+    "pdfjs-dist": "^2.9.359",
     "request": "^2.88.2",
     "vee-validate": "^4.4.9",
     "vue": "^2.6.11",

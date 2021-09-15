@@ -150,6 +150,11 @@ export default {
             ],
   }),
   methods:{
+    logout(){
+      localStorage.clear();
+      this.$router.push('/');
+
+    },
     check(title){
      if(title == 'Dashboard'){
 this.da = true
