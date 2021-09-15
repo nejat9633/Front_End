@@ -157,16 +157,19 @@
         </v-col>
       </v-row>
     </v-container>
+  <page-header/>
   </v-flex>
+
 </template>
 
 <script>
 const url = "http://localhost:8888/api/";
 import axios from "axios";
+import PageHeader from './pageHeader.vue';
 const token = localStorage.getItem("tok");
 const userId = localStorage.getItem("user");
 export default {
-  components: {},
+  components: {PageHeader},
   methods: {
     report(qID) {
       if (localStorage.getItem("tok") == null) {

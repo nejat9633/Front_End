@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+  <div>
 <div class="ml-2">
  <h2> Detailed Members Information   </h2>
 </div>
@@ -88,9 +88,8 @@
     </template>
   </v-simple-table>
 </v-card>
-    <club-pres/>
-    </v-container>
-
+  <clubPres/>
+  </div>
 </template>
 
 

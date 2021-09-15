@@ -1,5 +1,5 @@
 <template>
-
+<v-container>
  <v-card
     elevation="16"
     class="mx-auto my-12"
@@ -130,13 +130,17 @@
       </v-col>
     </v-row>
   </v-card>
+  <page-header/>
+</v-container>
 </template>
 
 <script>
 import axios from 'axios'
+import pageHeader from './pageHeader.vue'
 
 export default 
 {
+  components: { pageHeader },
 
     data: () => ({
         first_name: '',

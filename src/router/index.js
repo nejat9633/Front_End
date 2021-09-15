@@ -16,7 +16,7 @@ import MyClubs from '../components/Student/myClubs.vue'
 //import infoAdmin from '../views/infoAdmin.vue'
 import forumAdmin from '../components/forumAdmin/admin_page.vue'
 import adminSignup from '../components/adminSignup.vue'
-import materialAdmin from '../views/materialAdmin.vue'
+import materialAdmin from '../components/materialAdmin/materialPage.vue'
 import reports from '../components/forumAdmin/reports.vue'
 import forumstudents from '../components/forumAdmin/students.vue'
 import forumfeedbacks from '../components/forumAdmin/feedbacks.vue'
@@ -30,11 +30,12 @@ import forgotPassword from '../views/forgotPassword.vue'
 //import student from '../views/student.vue'
 import cpres from '../components/clubPresident/cpres.vue'
 
-import club from '../components/club_home'
+import club from '../components/club_home.vue'
 import applicants from '../components/clubPresident/applicants'
 import events from '../components/clubPresident/events.vue'
 import members from '../components/clubPresident/clubDetail.vue'
-
+import pageHeader from '../components/Home.vue'
+import addNew from '../components/clubPresident/addClub.vue'
 
 Vue.use(VueRouter)
 
@@ -49,6 +50,12 @@ const routes = [
     name: 'members',
     component: members
   },
+  {
+    path: '/addNewClub',
+    name: 'addClub',
+    component: addNew
+  },
+  
   {
     path: '/banned',
     name: 'banned',
@@ -74,7 +81,11 @@ const routes = [
     name: 'Home',
     component: Home
   },
-
+  {
+    path: '/pageHeader',
+    name: 'pageHeader',
+    component: pageHeader
+  },
   {
     path: '/login',
     name: 'login',

@@ -107,18 +107,21 @@
                     </v-btn>
                 </div>
             </v-row>
-
           </v-col>
         </v-row>
       </v-col>
     </v-row>
  
   </v-container>
+  <page-header/>
    </v-flex>
 </template>
 <script>
 import axios from 'axios'
+import pdf from 'vue-pdf'
+import pageHeader from '../components/pageHeader.vue'
 export default {
+  components: { pageHeader, pdf },
   name: "login",
   data() {
     return {
@@ -141,6 +144,9 @@ export default {
      },
     methods:
     {
+      getfile(){
+        window.open('C:/Users/samra/Desktop/NEw_Final_Frontend_project/Front_End/src/assets/Final-Exam-Model-for-PM-Final.pdf', "_blank");
+      },
       submit()
       {
         if(this.$refs.form.validate())
@@ -157,12 +163,13 @@ export default {
           this.response = res.data;
           if (res.status == 200 && res.data.status == "failure") {
             this.message = res.data.message;
-          } else if (
+          } 
+          /*else if (
             res.data.user.role != "student" &&
             res.data.user.passwordModified == false
           ) {
             this.$router.push("/adminPassword");
-          } else {
+          }*/ else {
             console.log(res.status);
             this.$store
               .dispatch("login", res.data)
@@ -170,13 +177,45 @@ export default {
                 if (res.data.user.role == "student") {
                   this.$router.push("/student");
                 } else if (res.data.user.role == "forum-admin") {
-                  this.$router.push("/forumAdmin");
+                    if (
+                     res.data.user.passwordModified == false
+                      ){
+                        this.$router.push("/adminPassword");
+                      }
+                      else{
+                         this.$router.push("/forumAdmin");
+                      }
+
                 } else if (res.data.user.role == "info-admin") {
-                  this.$router.push("/infoAdmin");
+                  if (
+                     res.data.user.passwordModified == false
+                      ){
+                        this.$router.push("/adminPassword");
+                      }
+                      else{
+                      this.$router.push("/infoAdmin");
+                      }
+
                 } else if (res.data.user.role == "material-admin") {
-                  this.$router.push("/materialAdmin");
+                  if(
+                     res.data.user.passwordModified == false
+                      ){
+                        this.$router.push("/adminPassword");
+                      }
+                      else{
+                      this.$router.push("/materialAdmin");
+                      }
                 } else if (res.data.user.role == "club-president") {
-                  this.$router.push("/clubPresident");
+                   if( res.data.user.passwordModified == false)
+                      {
+                        this.$router.push("/adminPassword");
+                      }
+                   else if(res.data.user.createdClub == true){
+                      this.$router.push("/clubPresident");
+                      }
+                      else{
+                        this.$router.push('/addNewClub')
+                      }
                 } else {
                   this.$router.push("/super");
                 }

@@ -56,7 +56,7 @@
                   text--white
                   class="d-flex align center ma-2"
                   width="200"
-                  @click="submit"
+                  @click="submit()"
                 >
                   <span>SUBMIT</span>
                 </v-btn>
@@ -107,7 +107,7 @@ import axios from "axios";
 export default {
   data: () => ({
     sentpassword: "",
-    sentpassword: "",
+    newpassword: "",
     respose: "",
     status: false,
     nameRules: [
@@ -118,8 +118,8 @@ export default {
     passwordRules: [
       (v) => !!v || "Password is required",
       (v) =>
-        /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) ||
-        "Password must contain at least lowercase letter, one number, a special character and one uppercase letter",
+        /(?=.*\d)(?=.*[a-z]).{6,}/.test(v) ||
+        "Password must contain at least lowercase letter, one number, a special character ",
     ],
     emailRules: [
       (v) => !!v || "E-mail is required",
@@ -132,20 +132,26 @@ export default {
 
   methods: {
     submit() {
+      let data = {
+          newpassword: this.newpassword,
+          sentpassword: this.sentpassword
+        }
       if (this.$refs.form.validate()) {
+        
         axios
           .post(
-            `http://localhost:8888/api/adminsPasswordReset/userId=${localStorage.getItem(
+            `http://localhost:8888/api/adminsPasswordReset/${localStorage.getItem(
               "user"
-            )}`
+            )}`, data
           )
-          .then((err, res) => {
+          .then((res) => {
             if (res.data.status == "success") {
               // localStorage.setItem('token', )
               this.$store
                 .dispatch("login", res.data)
                 .then(() => {
-                  if (res.data.user.role == "student") {
+                    this.$router.push('/login')
+                  /*if (res.data.user.role == "student") {
                     this.$router.push("/student");
                   } else if (res.data.user.role == "forum-admin") {
                     this.$router.push("/forumAdmin");
@@ -157,7 +163,7 @@ export default {
                     this.$router.push("/clubPresident");
                   } else {
                     this.$router.push("/super");
-                  }
+                  }*/
                 })
                 .catch(() => {
                   this.message = res.data.message;

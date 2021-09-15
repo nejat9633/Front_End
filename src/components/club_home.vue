@@ -7,100 +7,133 @@
         </v-row>
 <template >
 
- <v-container   >
-     <v-row v-if="message">
-         {{message}}
-     </v-row>
-         <v-row >
-<v-col  v-for="(note) in notice"
-            :key="note"
-            cols="auto"
-            sm="6"
-            md="4"
-            lg="3">
- <v-hover>
-    <template v-slot:default="{ hover }"  >
-      <v-card
-        class="mx-auto"
-        max-width="300"
-       min-height="300" 
-      
-       >
+ <v-container >
+       
+<v-row >
 
-        <v-img  :src="note.logo" 
-    
-        height="200"
-         contain ></v-img>
-
-        <v-card-text>
-          <h2 class="text-h6 primary--text">
-           {{note.clubname}}
-          </h2>
-
-          {{note.club_description}}  </v-card-text>
-
-        <v-fade-transition>
-          <v-overlay
-            v-if="hover"
-            absolute
-            color="#036358"  >
-
-             <div>
-            <v-btn v-if="!alert"
-        dark
-        @click="alert = true">See more info</v-btn>
-  
-          <v-alert
-      v-model="alert"
-      color="#212121"
+<v-card v-for="(club) in clubs"
+            :key="club"
+    class=" ma-5"
+     width="500"
+    height="300"
+    max-width="auto"
+    outlined
+  >
+   <v-card-text>
+<v-col>
+  <v-row>
+  <v-col cols="4">
+   <v-img 
+     :src="require('../assets/file_1630044730976.jpg')"
+        width="150"
+        max-height="100"
+        contain
       dark
-      dismissible
-      border="top"
-      icon="mdi-dots-horizontal"
-      transition="scale-transition"   >
+        />
+    </v-col>
+    
+  <v-col cols="7">
+<h2 class="black--text">{{club.clubname}}</h2>
 
-     {{note.maxIntake}}
-    </v-alert>
-          </div>
-          
-          </v-overlay>
-        </v-fade-transition>
-      </v-card>
-    </template>
-  </v-hover>
-  <v-flex> 
+        <div class=" black--text">
+        {{club.club_description}}}
+        </div>
+
+  </v-col>
+ </v-row>
+<v-row>
+    <v-col cols="3">
+   <div>
+    <v-responsive class=" pl-auto">
+      <v-avatar size="70">
+          <v-img :src="require('../assets/avatar_1.png')"  /> 
+      </v-avatar>
+    </v-responsive>
+   
+   </div>
+  </v-col>
+  <v-col cols="">
+       <div class=" black--text"> Club President: {{}}</div>
+        <div>{{}} </div>
+
+  </v-col>
+  </v-row>
+  </v-col>
+  
+  
+<v-card-actions>
+  <v-dialog max-width="600px">
+
+<template v-slot:activator="{ on, attrs }">
+<v-flex> 
     <v-btn
-  color="blue"
-  dark
-  @click="apply(note._id)"
-  class="ma-2"
-  :style="{left: '50%', transform:'translateX(-50%)'}"  > 
+  color="primary"
+  
+   v-bind="attrs"
+   v-on="on"
+  
+  :style="{left: '50%', transform:'translateX(-50%)'}" 
+  @click="apply()" > 
         apply
     </v-btn>
  
   </v-flex>
-</v-col>
+      </template>
 
+<v-card>
+    <v-card-title> 
+        <h2>Apply </h2>
+    </v-card-title>
+
+<v-divider></v-divider>
+
+  <v-card-text>
+
+   <v-form class="px-3" >
+
+        <v-text-field  label="Enter your department"
+            clearable>
+        </v-text-field>
+
+        <v-textarea  
+         v-model="reason" 
+         label="Why do you want to join this club? "
+         clearable
+        >
+        </v-textarea>
+       
+        <v-btn flat class="success mx-0 mt-3" @click="submit"> Submit Application </v-btn>
+     </v-form>
+  </v-card-text>  
+</v-card>
+</v-dialog>
+     </v-card-actions>
+</v-card-text> 
+  </v-card>
 </v-row>
  </v-container>
 
   </template>
+  <page-header/>
    </v-container>
 </template>
-
 <script>
 import axios from 'axios'
+import pageHeader from './pageHeader.vue'
 const url = 'http://localhost:8888/api/'
 
 export default {
+  components: { pageHeader },
    
 data() { 
   return{
       overlay: false,
       alert: false,
       message:'',
+      reason:'',
        name:'tester',
-        notice: '',    
+        notice: '',  
+        clubs:''  
 
   }
    
@@ -117,7 +150,7 @@ mounted(){
                    this.message = "No Clubs Are in the system"
                  }
                  else{
-                     this.notice = res.data.clubs
+                     this.clubs = res.data.clubs
                      console.log("true" + res.data)
                  }
              })
